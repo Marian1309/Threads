@@ -14,8 +14,12 @@ module.exports = {
       }
     },
     extend: {
+      screens: {
+        xs: '400px'
+      },
       colors: {
         favorite: '#641ae6',
+        glassmorphism: 'rgba(16, 16, 18, 0.60)',
 
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
