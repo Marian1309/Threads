@@ -3,6 +3,8 @@ import type { FC, ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { Figtree } from 'next/font/google';
 
+import { ClerkProvider } from '@clerk/nextjs';
+
 import { HotToastProvider, ThemeProvider } from '@/providers';
 
 import './globals.scss';
@@ -17,20 +19,22 @@ export const metadata: Metadata = {
 
 const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <html lang="en">
-      <body className={figtree.className}>
-        <HotToastProvider />
+    <ClerkProvider>
+      <html lang="en">
+        <body className={figtree.className}>
+          <HotToastProvider />
 
-        <ThemeProvider
-          themes={['light', 'dark']}
-          attribute="class"
-          enableSystem
-          defaultTheme="system"
-        >
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
+          <ThemeProvider
+            themes={['light', 'dark']}
+            attribute="class"
+            enableSystem
+            defaultTheme="system"
+          >
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 };
 
