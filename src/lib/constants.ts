@@ -1,6 +1,7 @@
 export const ICONS = {
   logo: '/icons/logo.svg',
-  logout: '/icons/logout.svg'
+  logout: '/icons/logout.svg',
+  profile: '/icons/profile.svg'
 };
 
 export const SIDEBAR_LINKS = [

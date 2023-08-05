@@ -4,10 +4,16 @@ import type { FC } from 'react';
 
 import { BounceLoader } from 'react-spinners';
 
-const GlobalLoader: FC = () => {
+import { cn } from '@/lib/utils';
+
+type Props = {
+  className?: string;
+};
+
+const GlobalLoader: FC<Props> = ({ className }) => {
   return (
-    <div className="h-[100svh] flex-center">
-      <BounceLoader color="#22c55e" size={40} loading />
+    <div className={cn('h-[100svh] flex-center', className)}>
+      <BounceLoader color="#641ae6" size={40} loading />
     </div>
   );
 };

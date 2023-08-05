@@ -64,7 +64,8 @@ module.exports = {
     'react/jsx-indent': 'off',
 
     'testing-library/no-render-in-setup': 'off',
-    'jest/valid-describe-callback': 'off'
+    'jest/valid-describe-callback': 'off',
+    'react/prop-types': 'off'
   },
   globals: {
     process: true,
