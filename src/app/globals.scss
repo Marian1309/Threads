@@ -79,6 +79,16 @@
   }
 }
 
+.cl-organizationSwitcherTrigger .cl-userPreview .cl-userPreviewTextContainer {
+  @apply max-sm:hidden;
+}
+
+.cl-organizationSwitcherTrigger
+  .cl-organizationPreview
+  .cl-organizationPreviewTextContainer {
+  @apply max-sm:hidden;
+}
+
 // Reset Styles
 
 :root,
@@ -131,8 +141,4 @@ button,
 textarea,
 select {
   font-family: inherit;
-}
-
-::-webkit-scrollbar {
-  display: none;
 }

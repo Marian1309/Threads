@@ -1,6 +1,7 @@
 'use client';
 
 import type { ChangeEvent, FC } from 'react';
+import { useState } from 'react';
 
 import Image from 'next/image';
 
@@ -8,6 +9,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
 import { ICONS } from '@/lib/constants';
+import { useUploadThing } from '@/lib/uploadthing';
+import { isBase64Image } from '@/lib/utils';
 import type { UserSchema } from '@/lib/validators';
 import { userSchema } from '@/lib/validators';
 
@@ -36,17 +39,32 @@ type Props = {
 };
 
 const AccountProfile: FC<Props> = ({ user, btnTitle }) => {
+  const [files, setFiles] = useState<File[]>([]);
+  const { startUpload } = useUploadThing('media');
+
   const form = useForm<UserSchema>({
     resolver: zodResolver(userSchema),
     defaultValues: {
-      profile_photo: '',
-      name: '',
-      username: '',
-      bio: ''
+      profile_photo: user?.image || '',
+      name: user?.name || '',
+      username: user?.username || '',
+      bio: user?.bio || ''
     }
   });
 
-  const onSubmit = () => {};
+  const onSubmit = async (values: UserSchema) => {
+    const blob = values.profile_photo;
+
+    const hasImageChanged = isBase64Image(blob);
+
+    if (hasImageChanged) {
+      const imagesResult = await startUpload(files);
+
+      if (imagesResult && imagesResult[0].fileUrl) {
+        values.profile_photo = imagesResult[0].fileUrl;
+      }
+    }
+  };
 
   const handleImage = (
     e: ChangeEvent<HTMLInputElement>,

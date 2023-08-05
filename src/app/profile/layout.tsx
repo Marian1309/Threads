@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 const ProfileLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <div className="h-screen flex-center">
+    <div className="h-[97.5svh] flex-center">
       <TopBar />
       {children}
       <BottomBar />
