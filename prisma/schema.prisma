@@ -3,16 +3,59 @@ generator client {
 }
 
 datasource db {
-  provider     = "postgresql"
-  url          = env("DATABASE_URL")
-  relationMode = "prisma"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
   id String @id @default(uuid())
 
-  name  String
-  email String @unique
+  username  String  @unique
+  name      String
+  image     String?
+  bio       String?
+  onboarded Boolean @default(false)
+
+  threads            Thread[]
+  communities        Community[]
+  createdCommunities Community[] @relation("CreatedBy")
+
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Thread {
+  id String @id @default(uuid())
+
+  text String
+
+  children Thread[] @relation("ParentThread")
+  parent   Thread?  @relation("ParentThread", fields: [parentId], references: [id])
+  parentId String?
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  community   Community? @relation(fields: [communityId], references: [id])
+  communityId String?
+
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Community {
+  id String @id @default(uuid())
+
+  username String  @unique
+  name     String
+  image    String?
+  bio      String?
+
+  createdBy   User   @relation("CreatedBy", fields: [createdById], references: [id])
+  createdById String
+
+  threads Thread[]
+  members User[]
 
   createAt  DateTime @default(now())
   updatedAt DateTime @updatedAt

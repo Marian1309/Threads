@@ -23,10 +23,10 @@ const TopBar: FC = () => {
   const router = useRouter();
 
   return (
-    <nav className="fixed top-0 z-30 min-h-[63px] w-full px-6 py-3 flex-between dark:bg-[#121417]">
+    <nav className="fixed top-0 z-30 min-h-[63px] w-full bg-[#121417] px-6 py-3 flex-between">
       <Link href="/" className="flex items-center gap-4">
         <Image src={ICONS.logo} alt="logo" width={28} height={28} />
-        <p className="text-[24px] font-bold leading-[140%] text-black dark:text-white max-xs:hidden">
+        <p className="text-[24px] font-bold leading-[140%] text-white max-xs:hidden">
           Threads
         </p>
       </Link>
@@ -36,7 +36,7 @@ const TopBar: FC = () => {
           appearance={{
             baseTheme: dark,
             elements: {
-              organizationSwitcherTrigger: 'py-2 px-4'
+              organizationSwitcherTrigger: 'py-2 mr-2'
             }
           }}
         />
