@@ -1,12 +1,18 @@
 'use client';
 
-import type { ChangeEvent, FC } from 'react';
+import type { FC } from 'react';
 import { useState } from 'react';
 
 import Image from 'next/image';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
+
+import type { UpdateUserPayload } from '@/types';
+import type { HandleChangeProfileImage } from '@/types/functions';
 
 import { ICONS } from '@/lib/constants';
 import { useUploadThing } from '@/lib/uploadthing';
@@ -26,11 +32,13 @@ import {
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 
+import { updateUser } from '@/actions/user';
+
 type Props = {
   user: {
     id: string;
     objectId: string;
-    username: string;
+    username: string | null;
     name: string;
     bio: string;
     image: string;
@@ -40,8 +48,11 @@ type Props = {
 
 const AccountProfile: FC<Props> = ({ user, btnTitle }) => {
   const [files, setFiles] = useState<File[]>([]);
-  const { startUpload } = useUploadThing('media');
 
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const { startUpload } = useUploadThing('media');
   const form = useForm<UserSchema>({
     resolver: zodResolver(userSchema),
     defaultValues: {
@@ -58,17 +69,43 @@ const AccountProfile: FC<Props> = ({ user, btnTitle }) => {
     const hasImageChanged = isBase64Image(blob);
 
     if (hasImageChanged) {
-      const imagesResult = await startUpload(files);
+      try {
+        const imagesResult = await startUpload(files);
 
-      if (imagesResult && imagesResult[0].fileUrl) {
-        values.profile_photo = imagesResult[0].fileUrl;
+        if (imagesResult && imagesResult[0].fileUrl) {
+          values.profile_photo = imagesResult[0].fileUrl;
+        }
+      } catch (err: unknown) {
+        if (err instanceof AxiosError) {
+          throw new Error(`Failed to upload an Image: ${err.message}`);
+        }
       }
+    }
+
+    const updateUserPayload: UpdateUserPayload = {
+      ...values,
+      image: values.profile_photo,
+      path: pathname
+    };
+
+    try {
+      await updateUser(user.id, updateUserPayload);
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+        throw new Error(`Failed to update a user: ${err.message}`);
+      }
+    }
+
+    if (pathname === '/profile/edit') {
+      router.back();
+    } else {
+      router.push('/');
     }
   };
 
-  const handleImage = (
-    e: ChangeEvent<HTMLInputElement>,
-    fieldChange: (value: string) => void
+  const handleChangeProfileImage: HandleChangeProfileImage = (
+    e,
+    fieldChange
   ) => {
     e.preventDefault();
 
@@ -78,7 +115,9 @@ const AccountProfile: FC<Props> = ({ user, btnTitle }) => {
       const file = e.target.files[0];
       setFiles(Array.from(e.target.files));
 
-      if (!file.type.includes('image')) return;
+      if (!file.type.includes('image')) {
+        return;
+      }
 
       fileReader.onload = async (event) => {
         const imageDataUrl = event.target?.result?.toString() || '';
@@ -86,6 +125,8 @@ const AccountProfile: FC<Props> = ({ user, btnTitle }) => {
       };
 
       fileReader.readAsDataURL(file);
+    } else {
+      return toast.error('Failed to upload an Image');
     }
   };
 
@@ -127,7 +168,7 @@ const AccountProfile: FC<Props> = ({ user, btnTitle }) => {
                   accept="image/*"
                   placeholder="Add profile photo"
                   className="cursor-pointer border-none bg-transparent outline-none file:text-[#0095F6]"
-                  onChange={(e) => handleImage(e, field.onChange)}
+                  onChange={(e) => handleChangeProfileImage(e, field.onChange)}
                 />
               </FormControl>
             </FormItem>
@@ -188,7 +229,8 @@ const AccountProfile: FC<Props> = ({ user, btnTitle }) => {
               <FormControl>
                 <Textarea
                   rows={6}
-                  className="border border-[#1F1F22] bg-[#101012] text-white focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
+                  className="border border-[#1F1F22] bg-[#101012] text-white focus-visible:ring-0
+                  focus-visible:ring-transparent focus-visible:ring-offset-0"
                   {...field}
                 />
               </FormControl>

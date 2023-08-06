@@ -1,15 +1,25 @@
+import { redirect } from 'next/navigation';
+
 import { currentUser } from '@clerk/nextjs';
 
-import { AccountProfile } from '@/components/blocks';
+import { AccountProfile } from '@/components/forms';
+
+import { fetchUser } from '@/actions/user';
 
 const Page = async () => {
   const user = await currentUser();
+  if (!user) {
+    return null;
+  }
 
-  const userInfo = {};
+  const userInfo = await fetchUser(user.id);
+  if (!userInfo?.onboarded) {
+    redirect('/onboarding');
+  }
 
   const userData = {
     id: user?.id,
-    objectId: userInfo?._id,
+    objectId: userInfo.id,
     username: userInfo?.username || user?.username,
     name: userInfo?.name || user?.firstName || '',
     bio: userInfo?.bio || '',
@@ -22,10 +32,10 @@ const Page = async () => {
         Onboarding
       </h1>
       <p className="mt-3 text-[16px] font-normal leading-[140%] text-[#EFEFEF]">
-        Complete your profile now to use Threads
+        Make some changes
       </p>
 
-      <section className="mt-9 bg-[#121417] p-10">
+      <section className="mt-9 p-10">
         <AccountProfile user={userData} btnTitle="Continue" />
       </section>
     </main>

@@ -98,6 +98,8 @@ body {
   line-height: 1.5;
   scroll-behavior: smooth;
   text-rendering: optimizespeed;
+  background-color: black;
+  color: white;
 }
 
 * {
@@ -141,4 +143,8 @@ button,
 textarea,
 select {
   font-family: inherit;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

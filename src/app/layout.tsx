@@ -6,7 +6,7 @@ import { Figtree } from 'next/font/google';
 import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 
-import { HotToastProvider, ThemeProvider } from '@/providers';
+import { HotToastProvider } from '@/providers';
 
 import './globals.scss';
 
@@ -25,14 +25,7 @@ const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
         <body className={figtree.className}>
           <HotToastProvider />
 
-          <ThemeProvider
-            themes={['light', 'dark']}
-            attribute="class"
-            enableSystem
-            defaultTheme="dark"
-          >
-            {children}
-          </ThemeProvider>
+          {children}
         </body>
       </html>
     </ClerkProvider>

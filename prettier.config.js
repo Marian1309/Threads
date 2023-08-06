@@ -13,7 +13,7 @@ const prettierConfig = {
     '^(react/(.*)$)|^(react$)',
     '^(next/(.*)$)|^(next$)',
     '<THIRD_PARTY_MODULES>',
-    '^@/types$',
+    '^(@/types$)|^(@/types/(.*)$)',
     '^@/lib/(.*)$',
     '^@/actions$',
     '^@/hooks/(.*)$',

@@ -36,20 +36,24 @@ const TopBar: FC = () => {
           appearance={{
             baseTheme: dark,
             elements: {
-              organizationSwitcherTrigger: 'py-2 mr-2'
+              organizationSwitcherTrigger: 'p-2 mr-2'
             }
           }}
         />
 
         <SignedIn>
           <SignOutButton signOutCallback={() => router.push('/sign-in')}>
-            <Button className="ml-[6px] cursor-pointer">Sign Out</Button>
+            <Button className="ml-[6px] cursor-pointer bg-slate-800 font-bold transition-colors hover:bg-slate-700">
+              Sign Out
+            </Button>
           </SignOutButton>
         </SignedIn>
 
         <SignedOut>
           <SignInButton>
-            <Button className="font-bold">Sign In</Button>
+            <Button className="ml-[6px] cursor-pointer bg-slate-800 font-bold transition-colors hover:bg-slate-700">
+              Sign In
+            </Button>
           </SignInButton>
         </SignedOut>
       </div>

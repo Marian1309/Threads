@@ -3,7 +3,7 @@ import type { FC } from 'react';
 const RightSidebar: FC = () => {
   return (
     <section
-      className="custom-scrollbar sticky right-0 top-0
+      className="sticky right-0 top-0
       z-20 flex w-fit flex-col justify-between gap-12 overflow-auto
       border-l border-l-[#5C5C7B] bg-[#121417] px-10 pb-6 pt-28 max-xl:hidden"
     >
