@@ -12,7 +12,7 @@
 - [Prisma ORM](https://www.prisma.io)
 - [Tailwind CSS](https://tailwindcss.com)
 - [Shadcn UI](https://ui.shadcn.com)
-- [Clerk](https://clerk.com)
+- [Clerk Auth](https://clerk.com)
 
 #
 

@@ -6,7 +6,7 @@ import { Figtree } from 'next/font/google';
 import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 
-import { HotToastProvider } from '@/providers';
+import HotToastProvider from '@/providers/hot-toast';
 
 import './globals.scss';
 

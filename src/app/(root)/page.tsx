@@ -9,7 +9,7 @@ const Page = async () => {
     redirect('/sign-in');
   }
 
-  return <p className="text-4xl font-bold">Home</p>;
+  return <p className="pt-28 text-4xl font-bold">Home</p>;
 };
 
 export default Page;

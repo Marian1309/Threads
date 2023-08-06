@@ -1,21 +1,26 @@
 # dependencies
+
 node_modules
 
 # Ignore files for PNPM, NPM and YARN
+
 pnpm-lock.yaml
 package-lock.json
 yarn.lock
 
 # next.js
+
 .next
 next-env.d.ts
 
 # production
+
 build
 dist
 out
 
 # vscode folder
+
 .vscode
 
 # env
@@ -30,4 +35,3 @@ out
 # testing
 
 .swc
-.storybook

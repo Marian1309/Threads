@@ -12,7 +12,7 @@ type Props = {
 
 const GlobalLoader: FC<Props> = ({ className }) => {
   return (
-    <div className={cn('h-[85svh] flex-center', className)}>
+    <div className={cn('h-[100svh] flex-center', className)}>
       <BounceLoader color="#641ae6" size={40} loading />
     </div>
   );

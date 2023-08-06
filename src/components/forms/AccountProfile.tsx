@@ -20,6 +20,8 @@ import { isBase64Image } from '@/lib/utils';
 import type { UserSchema } from '@/lib/validators';
 import { userSchema } from '@/lib/validators';
 
+import { updateUser } from '@/actions/user';
+
 import { Button } from '../ui/button';
 import {
   Form,
@@ -31,8 +33,6 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
-
-import { updateUser } from '@/actions/user';
 
 type Props = {
   user: {

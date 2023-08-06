@@ -93,12 +93,6 @@ module.exports = {
         '.full': {
           width: '100%',
           height: '100%'
-        },
-        '.w-half': {
-          width: '50%'
-        },
-        '.h-half': {
-          height: '50%'
         }
       });
     })

@@ -4,17 +4,14 @@ import { createUploadthing } from 'uploadthing/next';
 
 const f = createUploadthing();
 
-const getUser = async () => {
-  const user = await currentUser();
-  return user;
-};
-
 export const ourFileRouter = {
   media: f({ image: { maxFileSize: '4MB', maxFileCount: 1 } })
-    .middleware(async (_) => {
-      const user = await getUser();
+    .middleware(async () => {
+      const user = await currentUser();
 
-      if (!user) throw new Error('Unauthorized');
+      if (!user) {
+        throw new Error('Unauthorized');
+      }
 
       return { userId: user.id };
     })

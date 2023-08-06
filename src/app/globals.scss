@@ -79,17 +79,7 @@
   }
 }
 
-.cl-organizationSwitcherTrigger .cl-userPreview .cl-userPreviewTextContainer {
-  @apply max-sm:hidden;
-}
-
-.cl-organizationSwitcherTrigger
-  .cl-organizationPreview
-  .cl-organizationPreviewTextContainer {
-  @apply max-sm:hidden;
-}
-
-// Reset Styles
+// Reset styles
 
 :root,
 html,
@@ -147,4 +137,16 @@ select {
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+// Clerk Auth styles
+
+.cl-organizationSwitcherTrigger .cl-userPreview .cl-userPreviewTextContainer {
+  @apply max-sm:hidden;
+}
+
+.cl-organizationSwitcherTrigger
+  .cl-organizationPreview
+  .cl-organizationPreviewTextContainer {
+  @apply max-sm:hidden;
 }

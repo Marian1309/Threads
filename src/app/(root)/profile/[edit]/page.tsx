@@ -2,9 +2,9 @@ import { redirect } from 'next/navigation';
 
 import { currentUser } from '@clerk/nextjs';
 
-import { AccountProfile } from '@/components/forms';
-
 import { fetchUser } from '@/actions/user';
+
+import { AccountProfile } from '@/components/forms';
 
 const Page = async () => {
   const user = await currentUser();
@@ -27,7 +27,7 @@ const Page = async () => {
   };
 
   return (
-    <main className="mx-auto flex max-w-3xl flex-col justify-start rounded-lg px-10">
+    <main className="mx-auto flex max-w-3xl flex-col justify-start rounded-lg">
       <h1 className="text-[30px] font-bold leading-[140%] text-white">
         Onboarding
       </h1>
@@ -35,7 +35,7 @@ const Page = async () => {
         Make some changes
       </p>
 
-      <section className="mt-9 p-10">
+      <section className="mt-9">
         <AccountProfile user={userData} btnTitle="Continue" />
       </section>
     </main>

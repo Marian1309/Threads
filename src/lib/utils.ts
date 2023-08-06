@@ -25,6 +25,13 @@ export const isBase64Image = (imageData: string) => {
   return base64Regex.test(imageData);
 };
 
+export const handleWidth = () => {
+  return Math.max(
+    document.documentElement.clientWidth || 0,
+    window.innerWidth || 0
+  );
+};
+
 export const formatDateString = (dateString: string) => {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
