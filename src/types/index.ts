@@ -5,8 +5,8 @@ export type User = {
   image: string | null;
   bio: string | null;
   onboarded: boolean;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
 } | null;
 
 export type UpdateUserPayload = {

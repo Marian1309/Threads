@@ -11,9 +11,9 @@ import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 
-import type { UpdateUserPayload } from '@/types';
-import type { HandleChangeProfileImage } from '@/types/functions';
-
+import { ICONS } from '@/lib/constants';
+import type { UpdateUserPayload } from '@/lib/types';
+import type { HandleChangeProfileImage } from '@/lib/types/functions';
 import { useUploadThing } from '@/lib/uploadthing';
 import { isBase64Image } from '@/lib/utils';
 import type { UserSchema } from '@/lib/validators';
@@ -32,8 +32,6 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
-
-import { ICONS } from '@/constants';
 
 type Props = {
   user: {

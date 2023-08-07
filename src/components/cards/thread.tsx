@@ -11,7 +11,7 @@ type Props = {
   currentUserId: string;
   post: {
     id: string;
-    parentId: string;
+    parentId: string | null;
     content: string;
     author: {
       name: string;
@@ -23,21 +23,18 @@ type Props = {
       name: string;
       image: string;
     } | null;
-    createdAt: Date | string;
-    comments:
-      | {
-          author: {
-            image: string;
-          };
-        }[]
-      | undefined;
+    createdAt: Date;
+    comments: {
+      author: {
+        image: string;
+      };
+    }[];
   };
   isComment?: boolean;
 };
 
 const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
-  const { id, parentId, content, author, community, createdAt, comments } =
-    post;
+  const { id, author, community, createdAt, comments } = post;
 
   return (
     <article className="flex w-full flex-col rounded-xl bg-[#121417] p-7">
@@ -101,12 +98,20 @@ const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
                   className="cursor-pointer object-contain"
                 />
               </div>
+
+              {isComment && comments && comments.length > 0 && (
+                <Link href={`/thread/${id}`}>
+                  <p className="text-gray-1 mt-1 font-medium">
+                    {comments.length} repl{comments.length > 1 ? 'ies' : 'y'}
+                  </p>
+                </Link>
+              )}
             </div>
           </div>
         </div>
       </div>
 
-      {!isComment && comments?.length > 0 && (
+      {!isComment && comments && comments?.length > 0 && (
         <div className="ml-1 mt-3 flex items-center gap-2">
           {comments?.slice(0, 2).map((comment, index) => (
             <Image
@@ -128,7 +133,7 @@ const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
         </div>
       )}
 
-      {/* {!isComment && community && (
+      {!isComment && community && (
         <Link
           href={`/communities/${community.id}`}
           className="mt-5 flex items-center"
@@ -146,7 +151,7 @@ const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
             className="ml-1 rounded-full object-cover"
           />
         </Link>
-      )} */}
+      )}
     </article>
   );
 };

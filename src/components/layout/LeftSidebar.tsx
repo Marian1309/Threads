@@ -8,9 +8,8 @@ import { usePathname, useRouter } from 'next/navigation';
 
 import { SignOutButton, SignedIn, useAuth } from '@clerk/nextjs';
 
+import { ICONS, SIDEBAR_LINKS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
-
-import { ICONS, SIDEBAR_LINKS } from '@/constants';
 
 const LeftSidebar: FC = () => {
   const pathname = usePathname();

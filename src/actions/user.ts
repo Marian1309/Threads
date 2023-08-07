@@ -2,15 +2,17 @@
 
 import { revalidatePath } from 'next/cache';
 
-import type { FetchUserFn, UpdateUserFn } from '@/types/functions';
-
 import prismaClient from '@/lib/prisma-client';
+import type { FetchUserFn, UpdateUserFn } from '@/lib/types/functions';
 
 const fetchUser: FetchUserFn = async (userId) => {
   try {
     const user = await prismaClient.user.findFirst({
       where: {
         id: userId
+      },
+      include: {
+        threads: true
       }
     });
 
@@ -71,4 +73,34 @@ const updateUser: UpdateUserFn = async (userId, data, path) => {
   }
 };
 
-export { fetchUser, updateUser };
+const fetchUserPosts = async (userId: string) => {
+  try {
+    const userThreads = await prismaClient.user.findUnique({
+      where: { id: userId },
+      include: {
+        threads: {
+          include: {
+            children: {
+              include: {
+                author: {
+                  select: {
+                    name: true,
+                    id: true,
+                    image: true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+
+    return userThreads || [];
+  } catch (err: unknown) {
+    console.log(err);
+    throw new Error('Failed');
+  }
+};
+
+export { fetchUser, updateUser, fetchUserPosts };

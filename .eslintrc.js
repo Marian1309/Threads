@@ -65,7 +65,8 @@ module.exports = {
 
     'testing-library/no-render-in-setup': 'off',
     'jest/valid-describe-callback': 'off',
-    'react/prop-types': 'off'
+    'react/prop-types': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off'
   },
   globals: {
     process: true,

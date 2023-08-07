@@ -36,3 +36,15 @@ export const SIDEBAR_LINKS = [
     label: 'Profile'
   }
 ];
+
+export const profileTabs = [
+  { value: 'threads', label: 'Threads', icon: '/icons/reply.svg' },
+  { value: 'replies', label: 'Replies', icon: '/icons/members.svg' },
+  { value: 'tagged', label: 'Tagged', icon: '/icons/tag.svg' }
+];
+
+export const communityTabs = [
+  { value: 'threads', label: 'Threads', icon: '/icons/reply.svg' },
+  { value: 'members', label: 'Members', icon: '/icons/members.svg' },
+  { value: 'requests', label: 'Requests', icon: '/icons/request.svg' }
+];

@@ -2,9 +2,8 @@
 
 import { revalidatePath } from 'next/cache';
 
-import type { CreateThreadFn } from '@/types/functions';
-
 import prismaClient from '@/lib/prisma-client';
+import type { CreateThreadFn } from '@/lib/types/functions';
 
 const fetchPosts = async (pageNumber = 1, pageSize = 20) => {
   const skipAmount = (pageNumber - 1) * pageSize;
