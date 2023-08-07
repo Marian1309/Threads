@@ -20,11 +20,6 @@ export const copyToClipboard = (text: string, whatCopied?: string) => {
   }
 };
 
-export const isBase64Image = (imageData: string) => {
-  const base64Regex = /^data:image\/(png|jpe?g|gif|webp);base64,/;
-  return base64Regex.test(imageData);
-};
-
 export const handleWidth = () => {
   return Math.max(
     document.documentElement.clientWidth || 0,
@@ -32,7 +27,12 @@ export const handleWidth = () => {
   );
 };
 
-export const formatDateString = (dateString: string) => {
+export const isBase64Image = (imageData: string) => {
+  const base64Regex = /^data:image\/(png|jpe?g|gif|webp);base64,/;
+  return base64Regex.test(imageData);
+};
+
+export const formatDateString = (dateString: Date) => {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'short',

@@ -14,7 +14,6 @@ import { toast } from 'react-hot-toast';
 import type { UpdateUserPayload } from '@/types';
 import type { HandleChangeProfileImage } from '@/types/functions';
 
-import { ICONS } from '@/lib/constants';
 import { useUploadThing } from '@/lib/uploadthing';
 import { isBase64Image } from '@/lib/utils';
 import type { UserSchema } from '@/lib/validators';
@@ -33,6 +32,8 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
+
+import { ICONS } from '@/constants';
 
 type Props = {
   user: {
@@ -89,12 +90,11 @@ const AccountProfile: FC<Props> = ({ user, btnTitle }) => {
 
     try {
       await updateUser(user.id, updateUserPayload, pathname);
+      toast.success('Profile updated.');
     } catch (err: unknown) {
       if (err instanceof AxiosError) {
         throw new Error(`Failed to update a user: ${err.message}`);
       }
-    } finally {
-      toast.success('Profile updated.');
     }
 
     if (pathname === '/profile/edit') {
@@ -241,7 +241,7 @@ const AccountProfile: FC<Props> = ({ user, btnTitle }) => {
           )}
         />
 
-        <Button type="submit" className="bg-[#877EFF]">
+        <Button type="submit" className="bg-favorite">
           {btnTitle}
         </Button>
       </form>

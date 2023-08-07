@@ -23,28 +23,30 @@ type Props = {
       name: string;
       image: string;
     } | null;
-    createdAt: Date;
-    comments: {
-      author: {
-        image: string;
-      };
-    }[];
+    createdAt: Date | string;
+    comments:
+      | {
+          author: {
+            image: string;
+          };
+        }[]
+      | undefined;
   };
   isComment?: boolean;
 };
 
 const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
+  const { id, parentId, content, author, community, createdAt, comments } =
+    post;
+
   return (
     <article className="flex w-full flex-col rounded-xl bg-[#121417] p-7">
       <div className="flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col items-center">
-            <Link
-              href={`/profile/${post.author.id}`}
-              className="relative h-11 w-11"
-            >
+            <Link href={`/profile/${author.id}`} className="relative h-11 w-11">
               <Image
-                src={post.author.image}
+                src={author.image}
                 alt="Profile image"
                 fill
                 className="cursor-pointer rounded-full"
@@ -55,9 +57,9 @@ const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
           </div>
 
           <div className="flex w-full flex-col">
-            <Link href={`/profile/${post.author.id}`} className="w-fit">
+            <Link href={`/profile/${author.id}`} className="w-fit">
               <h4 className="text-base-semibold cursor-pointer text-white">
-                {post.author.name}
+                {author.name}
               </h4>
             </Link>
 
@@ -73,7 +75,7 @@ const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
                   className="cursor-pointer"
                 />
 
-                <Link href={`/thread/${post.id}`}>
+                <Link href={`/thread/${id}`}>
                   <Image
                     src="/icons/reply.svg"
                     alt="heart"
@@ -104,9 +106,9 @@ const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
         </div>
       </div>
 
-      {!isComment && post.comments.length > 0 && (
+      {!isComment && comments.length > 0 && (
         <div className="ml-1 mt-3 flex items-center gap-2">
-          {post.comments.slice(0, 2).map((comment, index) => (
+          {comments.slice(0, 2).map((comment, index) => (
             <Image
               key={index}
               src={comment.author.image}
@@ -119,26 +121,26 @@ const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
 
           <Link href={`/thread/${id}`}>
             <p className="text-subtle-medium text-gray-1 mt-1">
-              {post.comments.length} repl
-              {post.comments.length > 1 ? 'ies' : 'y'}
+              {comments.length} repl
+              {comments.length > 1 ? 'ies' : 'y'}
             </p>
           </Link>
         </div>
       )}
 
-      {!isComment && post.community && (
+      {!isComment && community && (
         <Link
-          href={`/communities/${post.community.id}`}
+          href={`/communities/${community.id}`}
           className="mt-5 flex items-center"
         >
           <p className="text-subtle-medium text-gray-1">
-            {formatDateString(post.createdAt)}
-            {post.community && ` - ${post.community.name} Community`}
+            {formatDateString(createdAt)}
+            {community && ` - ${community.name} Community`}
           </p>
 
           <Image
-            src={post.community.image}
-            alt={post.community.name}
+            src={community.image}
+            alt={community.name}
             width={14}
             height={14}
             className="ml-1 rounded-full object-cover"

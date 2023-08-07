@@ -5,8 +5,8 @@ export type User = {
   image: string | null;
   bio: string | null;
   onboarded: boolean;
-  createAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 } | null;
 
 export type UpdateUserPayload = {
@@ -20,5 +20,4 @@ export type CreateThreadPayload = {
   text: string;
   authorId: string;
   communityId: string | null;
-  path: string;
 };

@@ -19,7 +19,12 @@ const fetchPosts = async (pageNumber = 1, pageSize = 20) => {
     skip: skipAmount,
     take: pageSize,
     include: {
-      author: true,
+      author: {
+        select: {
+          name: true,
+          image: true
+        }
+      },
       children: {
         include: {
           author: {
@@ -44,8 +49,7 @@ const fetchPosts = async (pageNumber = 1, pageSize = 20) => {
 const createThread: CreateThreadFn = async ({
   text,
   authorId,
-  communityId,
-  path
+  communityId
 }) => {
   try {
     const createdThread = await prismaClient.thread.create({
@@ -55,6 +59,8 @@ const createThread: CreateThreadFn = async ({
         communityId: communityId ?? ''
       }
     });
+
+    revalidatePath('/');
 
     await prismaClient.user.update({
       where: {
@@ -71,8 +77,6 @@ const createThread: CreateThreadFn = async ({
   } catch (err: unknown) {
     console.log(err);
     throw new Error('Something went wrong while creating a thread.');
-  } finally {
-    revalidatePath(path);
   }
 };
 

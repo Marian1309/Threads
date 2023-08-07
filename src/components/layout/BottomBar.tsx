@@ -7,8 +7,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { SIDEBAR_LINKS } from '@/lib/constants';
 import { cn, handleWidth } from '@/lib/utils';
+
+import { SIDEBAR_LINKS } from '@/constants';
 
 const BottomBar: FC = () => {
   const [isMounted, setIsMoUnted] = useState<boolean>(false);

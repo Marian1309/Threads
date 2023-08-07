@@ -10,7 +10,7 @@ export type UpdateUserFn = (
   path: string
 ) => Promise<void>;
 
-export type FetchUserFn = (userId: string) => Promise<User | undefined>;
+export type FetchUserFn = (userId: string) => Promise<User | null>;
 
 export type CreateThreadFn = (data: CreateThreadPayload) => Promise<void>;
 

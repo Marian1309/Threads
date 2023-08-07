@@ -3,7 +3,7 @@ import { currentUser } from '@clerk/nextjs';
 import { fetchThreadById } from '@/actions/thread';
 import { fetchUser } from '@/actions/user';
 
-import ThreadCard from '@/components/cards/thread-card';
+import ThreadCard from '@/components/cards/thread';
 
 type Props = {
   params: {
@@ -13,7 +13,7 @@ type Props = {
 
 export const revalidate = 0;
 
-const Page = async ({ params }: Props) => {
+const ThreadIdPage = async ({ params }: Props) => {
   if (!params.id) {
     return null;
   }
@@ -24,7 +24,6 @@ const Page = async ({ params }: Props) => {
   }
 
   const userInfo = await fetchUser(user.id);
-
   const thread = await fetchThreadById(params.id);
 
   return (
@@ -34,17 +33,19 @@ const Page = async ({ params }: Props) => {
           key={thread?.id}
           currentUserId={user.id}
           post={{
-            id: thread?.id,
+            id: thread?.id || '',
             parentId: thread?.parentId || '',
-            content: thread?.text,
+            content: thread?.text || '',
             author: {
-              id: thread?.author?.id,
-              name: thread?.author?.name,
+              id: thread?.authorId || '',
+              name: thread?.author?.name || '',
               image: thread?.author?.image || ''
             },
-            createdAt: thread?.createdAt,
-            comments: thread?.children,
-            community: thread?.community || null
+            createdAt: thread?.createdAt || '',
+            comments: thread?.children.map((comment) => ({
+              author: { image: comment.author.image || '' }
+            })),
+            community: null
           }}
         />
       </div>
@@ -52,4 +53,4 @@ const Page = async ({ params }: Props) => {
   );
 };
 
-export default Page;
+export default ThreadIdPage;

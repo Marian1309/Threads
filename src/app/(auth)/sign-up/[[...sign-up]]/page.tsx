@@ -1,7 +1,9 @@
+import type { NextPage } from 'next';
+
 import { SignUp } from '@clerk/nextjs';
 
-const Page = async () => {
+const SignUpPage: NextPage = () => {
   return <SignUp />;
 };
 
-export default Page;
+export default SignUpPage;

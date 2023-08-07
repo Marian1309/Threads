@@ -62,6 +62,7 @@ const updateUser: UpdateUserFn = async (userId, data, path) => {
       }
     });
 
+    // TODO rewrite when /profile/edit will be
     if (path === `/profile/${userId}`) {
       revalidatePath(path);
     }

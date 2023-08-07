@@ -4,15 +4,15 @@ import { currentUser } from '@clerk/nextjs';
 
 import { fetchPosts } from '@/actions/thread';
 
-import ThreadCard from '@/components/cards/thread-card';
+import ThreadCard from '@/components/cards/thread';
 
 const Page = async () => {
   const user = await currentUser();
-  const { posts } = await fetchPosts(1, 30);
-
   if (!user) {
     redirect('/sign-in');
   }
+
+  const { posts } = await fetchPosts(1, 30);
 
   return (
     <>
@@ -22,25 +22,39 @@ const Page = async () => {
         {posts.length === 0 ? (
           <p className="text-left text-xl text-[#7878A3]">No threads found.</p>
         ) : (
-          posts.map((post) => (
-            <ThreadCard
-              key={post.id}
-              currentUserId={user.id}
-              post={{
-                id: post.id,
-                parentId: post.parentId || '',
-                content: post.text,
-                author: {
-                  id: post.author.id,
-                  name: post.author.name,
-                  image: post.author.image || ''
-                },
-                createdAt: post.createdAt,
-                comments: post.children,
-                community: post.community || null
-              }}
-            />
-          ))
+          posts.map((post) => {
+            const {
+              id,
+              parentId,
+              text,
+              authorId,
+              author,
+              createdAt,
+              children
+            } = post;
+
+            return (
+              <ThreadCard
+                key={id}
+                currentUserId={user.id}
+                post={{
+                  id,
+                  parentId: parentId || '',
+                  content: text,
+                  author: {
+                    id: authorId,
+                    name: author.name,
+                    image: author.image || ''
+                  },
+                  createdAt,
+                  comments: children.map((comment) => ({
+                    author: { image: comment.author.image || '' }
+                  })),
+                  community: null
+                }}
+              />
+            );
+          })
         )}
       </section>
     </>

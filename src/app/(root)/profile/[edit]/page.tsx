@@ -4,7 +4,7 @@ import { fetchUser } from '@/actions/user';
 
 import { AccountProfile } from '@/components/forms';
 
-const Page = async () => {
+const ProfileEditPage = async () => {
   const user = await currentUser();
   if (!user) {
     return null;
@@ -37,4 +37,4 @@ const Page = async () => {
   );
 };
 
-export default Page;
+export default ProfileEditPage;

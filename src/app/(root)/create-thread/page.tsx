@@ -4,7 +4,7 @@ import { fetchUser } from '@/actions/user';
 
 import { PostThread } from '@/components/forms';
 
-const Page = async () => {
+const CreateThreadPage = async () => {
   const user = await currentUser();
   if (!user) {
     return null;
@@ -23,4 +23,4 @@ const Page = async () => {
   );
 };
 
-export default Page;
+export default CreateThreadPage;

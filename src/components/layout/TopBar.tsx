@@ -9,9 +9,9 @@ import { useRouter } from 'next/navigation';
 import { OrganizationSwitcher, SignOutButton, SignedIn } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 
-import { ICONS } from '@/lib/constants';
-
 import { Button } from '../ui/button';
+
+import { ICONS } from '@/constants';
 
 const TopBar: FC = () => {
   const router = useRouter();

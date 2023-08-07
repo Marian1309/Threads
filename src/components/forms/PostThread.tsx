@@ -2,9 +2,8 @@
 
 import type { FC } from 'react';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
-import { useOrganization } from '@clerk/nextjs';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
@@ -32,9 +31,6 @@ type Props = {
 
 const PostThread: FC<Props> = ({ userId }) => {
   const router = useRouter();
-  const pathname = usePathname();
-
-  const organization = useOrganization();
   const form = useForm<ThreadSchema>({
     resolver: zodResolver(threadSchema),
     defaultValues: {
@@ -48,17 +44,19 @@ const PostThread: FC<Props> = ({ userId }) => {
       await createThread({
         text: values.thread,
         authorId: userId,
-        communityId: null,
-        path: pathname
+        communityId: null
       });
+
+      form.reset();
+
+      toast.success('Thread has been created.');
+
+      router.push('/');
+      router.refresh();
     } catch (err: unknown) {
       if (err instanceof AxiosError) {
         toast.error(err.response?.data);
       }
-    } finally {
-      form.reset();
-      toast.success('Thread has been created.');
-      router.replace('/');
     }
   };
 
@@ -89,7 +87,7 @@ const PostThread: FC<Props> = ({ userId }) => {
           )}
         />
 
-        <Button type="submit" className="bg-[#877EFF]">
+        <Button type="submit" className="bg-favorite">
           Post Thread
         </Button>
       </form>
