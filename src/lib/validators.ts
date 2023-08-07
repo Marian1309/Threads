@@ -22,3 +22,8 @@ export const threadSchema = z.object({
   accountId: z.string()
 });
 export type ThreadSchema = z.infer<typeof threadSchema>;
+
+export const commentSchema = z.object({
+  thread: z.string().nonempty().min(3, { message: 'Minimum 3 characters.' })
+});
+export type CommentSchema = z.infer<typeof commentSchema>;

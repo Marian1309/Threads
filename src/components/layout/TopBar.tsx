@@ -37,7 +37,7 @@ const TopBar: FC = () => {
 
         <SignedIn>
           <SignOutButton signOutCallback={() => router.push('/sign-in')}>
-            <Button className="ml-[6px] cursor-pointer bg-slate-800 font-bold transition-colors hover:bg-slate-700">
+            <Button className="ml-[6px] cursor-pointer bg-favorite font-bold transition-colors hover:bg-slate-700">
               Sign Out
             </Button>
           </SignOutButton>

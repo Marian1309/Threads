@@ -39,7 +39,7 @@ const LeftSidebar: FC = () => {
               className={cn(
                 'flex items-center justify-start gap-4 rounded-lg p-4 transition-colors',
                 isActive && 'bg-[#641ae6]',
-                !isActive && 'hover:bg-[#877EFF]'
+                !isActive && 'hover:bg-slate-500'
               )}
             >
               <Image src={imgURL} alt={label} width={24} height={24} />

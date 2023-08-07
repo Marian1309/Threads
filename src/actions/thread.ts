@@ -120,4 +120,43 @@ const fetchThreadById = async (threadId: string) => {
   }
 };
 
-export { createThread, fetchPosts, fetchThreadById };
+const addCommentToThread = async (
+  threadId: string,
+  commentText: string,
+  userId: string,
+  path: string
+) => {
+  try {
+    const originalThread = await prismaClient.thread.findFirst({
+      where: { id: threadId }
+    });
+
+    if (!originalThread) {
+      throw new Error('Thread not found');
+    }
+
+    const commentThread = await prismaClient.thread.create({
+      data: {
+        text: commentText,
+        authorId: userId,
+        parentId: threadId,
+        communityId: ''
+      }
+    });
+
+    await prismaClient.thread.update({
+      where: { id: threadId },
+      data: {
+        children: {
+          connect: { id: commentThread.id }
+        }
+      }
+    });
+
+    revalidatePath(path);
+  } catch (err: unknown) {
+    throw new Error('Unable to add comment');
+  }
+};
+
+export { createThread, fetchPosts, fetchThreadById, addCommentToThread };

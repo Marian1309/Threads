@@ -5,14 +5,24 @@ import { currentUser } from '@clerk/nextjs';
 import { fetchPosts } from '@/actions/thread';
 
 import ThreadCard from '@/components/cards/thread';
+import { Pagination } from '@/components/common';
 
-const Page = async () => {
+type Props = {
+  searchParams: {
+    [key: string]: string | undefined;
+  };
+};
+
+const HomePage = async ({ searchParams }: Props) => {
   const user = await currentUser();
   if (!user) {
     redirect('/sign-in');
   }
 
-  const { posts } = await fetchPosts(1, 30);
+  const { posts, isNext } = await fetchPosts(
+    searchParams.page ? +searchParams.page : 1,
+    30
+  );
 
   return (
     <>
@@ -57,8 +67,14 @@ const Page = async () => {
           })
         )}
       </section>
+
+      <Pagination
+        path="/"
+        pageNumber={searchParams?.page ? +searchParams.page : 1}
+        isNext={isNext}
+      />
     </>
   );
 };
 
-export default Page;
+export default HomePage;

@@ -58,7 +58,7 @@ const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
 
           <div className="flex w-full flex-col">
             <Link href={`/profile/${author.id}`} className="w-fit">
-              <h4 className="text-base-semibold cursor-pointer text-white">
+              <h4 className="cursor-pointer font-semibold text-white">
                 {author.name}
               </h4>
             </Link>
@@ -106,9 +106,9 @@ const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
         </div>
       </div>
 
-      {!isComment && comments.length > 0 && (
+      {!isComment && comments?.length > 0 && (
         <div className="ml-1 mt-3 flex items-center gap-2">
-          {comments.slice(0, 2).map((comment, index) => (
+          {comments?.slice(0, 2).map((comment, index) => (
             <Image
               key={index}
               src={comment.author.image}
@@ -120,15 +120,15 @@ const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
           ))}
 
           <Link href={`/thread/${id}`}>
-            <p className="text-subtle-medium text-gray-1 mt-1">
-              {comments.length} repl
-              {comments.length > 1 ? 'ies' : 'y'}
+            <p className="mt-1 pl-1 text-slate-500">
+              {comments?.length} repl
+              {comments?.length > 1 ? 'ies' : 'y'}
             </p>
           </Link>
         </div>
       )}
 
-      {!isComment && community && (
+      {/* {!isComment && community && (
         <Link
           href={`/communities/${community.id}`}
           className="mt-5 flex items-center"
@@ -146,7 +146,7 @@ const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
             className="ml-1 rounded-full object-cover"
           />
         </Link>
-      )}
+      )} */}
     </article>
   );
 };

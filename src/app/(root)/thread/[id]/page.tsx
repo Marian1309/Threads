@@ -4,6 +4,7 @@ import { fetchThreadById } from '@/actions/thread';
 import { fetchUser } from '@/actions/user';
 
 import ThreadCard from '@/components/cards/thread';
+import { Comment } from '@/components/forms';
 
 type Props = {
   params: {
@@ -48,6 +49,44 @@ const ThreadIdPage = async ({ params }: Props) => {
             community: null
           }}
         />
+      </div>
+
+      <div className="mt-7">
+        <Comment
+          threadId={thread?.id || ''}
+          currentUserImg={user.imageUrl}
+          currentUserId={JSON.stringify(userInfo?.id)}
+        />
+      </div>
+
+      <div className="mt-10 flex flex-col gap-5">
+        {thread?.children.map((childrenItem) => {
+          const { id, parentId, text, authorId, author, createdAt, children } =
+            childrenItem;
+
+          return (
+            <ThreadCard
+              key={id}
+              currentUserId={user.id}
+              post={{
+                id,
+                parentId: parentId || '',
+                content: text,
+                author: {
+                  id: authorId,
+                  name: author.name,
+                  image: author.image || ''
+                },
+                createdAt,
+                comments: children.map((comment) => ({
+                  author: { image: comment.author.image || '' }
+                })),
+                community: null
+              }}
+              isComment
+            />
+          );
+        })}
       </div>
     </section>
   );
