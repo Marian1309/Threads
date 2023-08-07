@@ -12,11 +12,11 @@ const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
     <>
       <TopBar />
 
-      <main className="flex min-h-[100svh] overflow-y-hidden">
+      <main className="flex">
         <LeftSidebar />
 
-        <section className="flex flex-1 flex-col items-center px-6 max-md:pb-32 sm:px-10">
-          <div className="w-full max-w-2xl lg:max-w-4xl">{children}</div>
+        <section className="flex min-h-screen flex-1 flex-col items-center bg-black px-6 pb-10 max-md:pb-32 sm:px-10">
+          <div className="w-full max-w-4xl">{children}</div>
         </section>
 
         <RightSidebar />

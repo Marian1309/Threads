@@ -11,12 +11,18 @@ import { SIDEBAR_LINKS } from '@/lib/constants';
 import { cn, handleWidth } from '@/lib/utils';
 
 const BottomBar: FC = () => {
+  const [isMounted, setIsMoUnted] = useState<boolean>(false);
   const [width, setWidth] = useState<number>(1920);
   const pathname = usePathname();
 
   useEffect(() => {
+    setIsMoUnted(true);
     setWidth(handleWidth());
   }, []);
+
+  if (!isMounted) {
+    return null;
+  }
 
   window.addEventListener('resize', () => setWidth(handleWidth()));
 

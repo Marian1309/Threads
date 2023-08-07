@@ -84,16 +84,17 @@ const AccountProfile: FC<Props> = ({ user, btnTitle }) => {
 
     const updateUserPayload: UpdateUserPayload = {
       ...values,
-      image: values.profile_photo,
-      path: pathname
+      image: values.profile_photo
     };
 
     try {
-      await updateUser(user.id, updateUserPayload);
+      await updateUser(user.id, updateUserPayload, pathname);
     } catch (err: unknown) {
       if (err instanceof AxiosError) {
         throw new Error(`Failed to update a user: ${err.message}`);
       }
+    } finally {
+      toast.success('Profile updated.');
     }
 
     if (pathname === '/profile/edit') {

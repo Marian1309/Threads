@@ -1,21 +1,28 @@
 'use client';
 
-import { useEffect } from 'react';
-
-import { useRouter } from 'next/navigation';
-
-import { toast } from 'react-hot-toast';
+import {
+  BottomBar,
+  LeftSidebar,
+  RightSidebar,
+  TopBar
+} from '@/components/layout';
 
 const NotFound = () => {
-  const router = useRouter();
+  return (
+    <>
+      <TopBar />
+      <main className="flex">
+        <LeftSidebar />
 
-  useEffect(() => {
-    toast.error('Path not Found');
-    router.replace('/');
-    console.clear();
-  }, [router]);
+        <section className="mt-28 flex min-h-screen flex-1 flex-col items-center px-6 pb-10 max-md:pb-32 sm:px-10">
+          <div className="w-full max-w-4xl font-bold">Fuck you</div>
+        </section>
 
-  return null;
+        <RightSidebar />
+      </main>
+      <BottomBar />
+    </>
+  );
 };
 
 export default NotFound;

@@ -20,7 +20,7 @@ const LeftSidebar: FC = () => {
   return (
     <section
       className="sticky left-0 top-0 z-20
-      w-fit flex-col overflow-y-auto bg-[#121417]
+      h-screen w-fit flex-col bg-[#121417]
       pb-5 pt-28 flex-center max-md:hidden"
     >
       <div className="flex w-full flex-1 flex-col gap-6 px-6">

@@ -14,5 +14,11 @@ export type UpdateUserPayload = {
   name: string;
   bio: string;
   image: string;
+};
+
+export type CreateThreadPayload = {
+  text: string;
+  authorId: string;
+  communityId: string | null;
   path: string;
 };

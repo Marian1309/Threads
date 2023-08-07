@@ -1,5 +1,5 @@
 export const ICONS = {
-  logo: '/icons/logo.svg',
+  logo: '/icons/logo.png',
   logout: '/icons/logout.svg',
   profile: '/icons/profile.svg'
 };

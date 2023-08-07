@@ -1,8 +1,6 @@
-import type { FC } from 'react';
-
 import { SignIn } from '@clerk/nextjs';
 
-const Page: FC = () => {
+const Page = async () => {
   return <SignIn />;
 };
 

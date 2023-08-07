@@ -6,13 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import {
-  OrganizationSwitcher,
-  SignInButton,
-  SignOutButton,
-  SignedIn,
-  SignedOut
-} from '@clerk/nextjs';
+import { OrganizationSwitcher, SignOutButton, SignedIn } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 
 import { ICONS } from '@/lib/constants';
@@ -48,14 +42,6 @@ const TopBar: FC = () => {
             </Button>
           </SignOutButton>
         </SignedIn>
-
-        <SignedOut>
-          <SignInButton>
-            <Button className="ml-[6px] cursor-pointer bg-slate-800 font-bold transition-colors hover:bg-slate-700">
-              Sign In
-            </Button>
-          </SignInButton>
-        </SignedOut>
       </div>
     </nav>
   );

@@ -1,5 +1,3 @@
-import { redirect } from 'next/navigation';
-
 import { currentUser } from '@clerk/nextjs';
 
 import { fetchUser } from '@/actions/user';
@@ -13,13 +11,10 @@ const Page = async () => {
   }
 
   const userInfo = await fetchUser(user.id);
-  if (!userInfo?.onboarded) {
-    redirect('/onboarding');
-  }
 
   const userData = {
     id: user?.id,
-    objectId: userInfo.id,
+    objectId: userInfo?.id || '',
     username: userInfo?.username || user?.username,
     name: userInfo?.name || user?.firstName || '',
     bio: userInfo?.bio || '',
@@ -27,9 +22,9 @@ const Page = async () => {
   };
 
   return (
-    <main className="mx-auto flex max-w-3xl flex-col justify-start rounded-lg">
-      <h1 className="text-[30px] font-bold leading-[140%] text-white">
-        Onboarding
+    <main className="mx-auto flex max-w-2xl flex-col justify-start rounded-lg lg:max-w-4xl">
+      <h1 className="mt-24 text-[30px] font-bold leading-[140%] text-white">
+        Profile
       </h1>
       <p className="mt-3 text-[16px] font-normal leading-[140%] text-[#EFEFEF]">
         Make some changes

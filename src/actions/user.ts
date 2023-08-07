@@ -2,8 +2,6 @@
 
 import { revalidatePath } from 'next/cache';
 
-import { AxiosError } from 'axios';
-
 import type { FetchUserFn, UpdateUserFn } from '@/types/functions';
 
 import prismaClient from '@/lib/prisma-client';
@@ -18,14 +16,37 @@ const fetchUser: FetchUserFn = async (userId) => {
 
     return user;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) {
-      throw new Error(`Failed to fetch user: ${err.message}`);
-    }
+    throw new Error('Something went wrong while fetching a user.');
   }
 };
 
-const updateUser: UpdateUserFn = async (userId, data) => {
-  const { username, name, bio, image, path } = data;
+const updateUser: UpdateUserFn = async (userId, data, path) => {
+  const { username, name, bio, image } = data;
+
+  try {
+    const userExists = await prismaClient.user.findFirst({
+      where: {
+        id: userId
+      }
+    });
+
+    if (!userExists) {
+      await prismaClient.user.create({
+        data: {
+          id: userId,
+          username: username.toLowerCase(),
+          name,
+          bio,
+          image,
+          onboarded: true
+        }
+      });
+
+      return;
+    }
+  } catch (err: unknown) {
+    throw new Error('Something went wrong while creating a user.');
+  }
 
   try {
     await prismaClient.user.update({
@@ -45,9 +66,7 @@ const updateUser: UpdateUserFn = async (userId, data) => {
       revalidatePath(path);
     }
   } catch (err: unknown) {
-    if (err instanceof AxiosError) {
-      throw new Error(`Failed to fetch user: ${err.message}`);
-    }
+    throw new Error('Something went wrong while updating a user.');
   }
 };
 
