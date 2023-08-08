@@ -1,6 +1,11 @@
 import type { ChangeEvent } from 'react';
 
-import type { CreateThreadPayload, UpdateUserPayload, User } from '.';
+import type {
+  CreateThreadPayload,
+  FetchUsersPayload,
+  UpdateUserPayload,
+  User
+} from '.';
 import type { Thread } from '@prisma/client';
 
 // Actions
@@ -16,6 +21,14 @@ export type FetchUserFn = (
 ) => Promise<(User & { threads: Thread[] }) | null>;
 
 export type CreateThreadFn = (data: CreateThreadPayload) => Promise<void>;
+
+export type FetchUsersFn = ({
+  userId,
+  searchString,
+  sortBy,
+  pageNumber,
+  pageSize
+}: FetchUsersPayload) => Promise<{ users: User[]; isNext: boolean }>;
 
 // Others
 

@@ -2,8 +2,13 @@
 
 import { revalidatePath } from 'next/cache';
 
+import type {
+  FetchUserFn,
+  FetchUsersFn,
+  UpdateUserFn
+} from '@/types/functions';
+
 import prismaClient from '@/lib/prisma-client';
-import type { FetchUserFn, UpdateUserFn } from '@/lib/types/functions';
 
 const fetchUser: FetchUserFn = async (userId) => {
   try {
@@ -24,31 +29,6 @@ const fetchUser: FetchUserFn = async (userId) => {
 
 const updateUser: UpdateUserFn = async (userId, data, path) => {
   const { username, name, bio, image } = data;
-
-  try {
-    const userExists = await prismaClient.user.findFirst({
-      where: {
-        id: userId
-      }
-    });
-
-    if (!userExists) {
-      await prismaClient.user.create({
-        data: {
-          id: userId,
-          username: username.toLowerCase(),
-          name,
-          bio,
-          image,
-          onboarded: true
-        }
-      });
-
-      return;
-    }
-  } catch (err: unknown) {
-    throw new Error('Something went wrong while creating a user.');
-  }
 
   try {
     await prismaClient.user.update({
@@ -98,9 +78,54 @@ const fetchUserPosts = async (userId: string) => {
 
     return userThreads || [];
   } catch (err: unknown) {
-    console.log(err);
     throw new Error('Failed');
   }
 };
 
-export { fetchUser, updateUser, fetchUserPosts };
+const fetchUsers: FetchUsersFn = async ({
+  userId,
+  searchString = '',
+  sortBy = 'desc',
+  pageNumber = 1,
+  pageSize = 20
+}) => {
+  try {
+    const skipAmount = (pageNumber - 1) * pageSize;
+
+    const searchTerm = `%${searchString}%`;
+
+    const orderBy =
+      sortBy === 'asc' ? { createdAt: 'asc' } : { createdAt: 'desc' };
+
+    const users = await prismaClient.user.findMany({
+      where: {
+        id: { not: userId }, // Exclude the current user from the results.
+        OR: [
+          { username: { contains: searchTerm, mode: 'insensitive' } },
+          { name: { contains: searchTerm, mode: 'insensitive' } }
+        ]
+      },
+      orderBy,
+      skip: skipAmount,
+      take: pageSize
+    });
+
+    const totalUsersCount = await prismaClient.user.count({
+      where: {
+        id: { not: userId },
+        OR: [
+          { username: { contains: searchTerm, mode: 'insensitive' } },
+          { name: { contains: searchTerm, mode: 'insensitive' } }
+        ]
+      }
+    });
+
+    const isNext = totalUsersCount > skipAmount + users.length;
+
+    return { users, isNext };
+  } catch (err: unknown) {
+    throw new Error('Failed');
+  }
+};
+
+export { fetchUser, updateUser, fetchUserPosts, fetchUsers };

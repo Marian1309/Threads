@@ -21,3 +21,11 @@ export type CreateThreadPayload = {
   authorId: string;
   communityId: string | null;
 };
+
+export type FetchUsersPayload = {
+  userId: string;
+  searchString?: string;
+  pageNumber?: number;
+  pageSize?: number;
+  sortBy?: 'desc' | 'asc';
+};

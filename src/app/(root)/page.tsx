@@ -2,6 +2,8 @@ import { redirect } from 'next/navigation';
 
 import { currentUser } from '@clerk/nextjs';
 
+import prismaClient from '@/lib/prisma-client';
+
 import { fetchPosts } from '@/actions/thread';
 
 import ThreadCard from '@/components/cards/thread';
@@ -17,6 +19,25 @@ const HomePage = async ({ searchParams }: Props) => {
   const user = await currentUser();
   if (!user) {
     redirect('/sign-in');
+  }
+
+  const userExists = await prismaClient.user.findFirst({
+    where: {
+      id: user.id
+    }
+  });
+
+  if (!userExists) {
+    await prismaClient.user.create({
+      data: {
+        id: user.id,
+        username: user.username || '',
+        name: `${user.firstName} ${user.lastName}`,
+        bio: '',
+        image: user.imageUrl,
+        onboarded: true
+      }
+    });
   }
 
   const { posts, isNext } = await fetchPosts(
