@@ -51,6 +51,7 @@ const Comment: FC<Props> = ({ threadId, currentUserId, currentUserImg }) => {
         JSON.parse(currentUserId),
         pathname
       );
+
       form.reset();
 
       toast.success('Thread has been created.');

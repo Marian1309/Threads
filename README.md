@@ -16,10 +16,6 @@
 
 #
 
-## Features
-
-#
-
 ## Installation
 
 ### 1. Install PNPM

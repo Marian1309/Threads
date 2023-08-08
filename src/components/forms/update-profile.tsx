@@ -11,9 +11,10 @@ import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 
+import type { UpdateUserPayload } from '@/types';
+import type { HandleChangeProfileImage } from '@/types/functions';
+
 import { ICONS } from '@/lib/constants';
-import type { UpdateUserPayload } from '@/lib/types';
-import type { HandleChangeProfileImage } from '@/lib/types/functions';
 import { useUploadThing } from '@/lib/uploadthing';
 import { isBase64Image } from '@/lib/utils';
 import type { UserSchema } from '@/lib/validators';
@@ -45,7 +46,7 @@ type Props = {
   btnTitle: string;
 };
 
-const AccountProfile: FC<Props> = ({ user, btnTitle }) => {
+const UpdateProfile: FC<Props> = ({ user, btnTitle }) => {
   const [files, setFiles] = useState<File[]>([]);
 
   const router = useRouter();
@@ -75,9 +76,7 @@ const AccountProfile: FC<Props> = ({ user, btnTitle }) => {
           values.profile_photo = imagesResult[0].fileUrl;
         }
       } catch (err: unknown) {
-        if (err instanceof AxiosError) {
-          throw new Error(`Failed to upload an Image: ${err.message}`);
-        }
+        toast('Failed to upload an Image');
       }
     }
 
@@ -88,6 +87,7 @@ const AccountProfile: FC<Props> = ({ user, btnTitle }) => {
 
     try {
       await updateUser(user.id, updateUserPayload, pathname);
+
       toast.success('Profile updated.');
     } catch (err: unknown) {
       if (err instanceof AxiosError) {
@@ -247,4 +247,4 @@ const AccountProfile: FC<Props> = ({ user, btnTitle }) => {
   );
 };
 
-export default AccountProfile;
+export default UpdateProfile;

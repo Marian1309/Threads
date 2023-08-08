@@ -6,7 +6,7 @@ import { fetchUsers } from '@/actions/user';
 
 import UserCard from '@/components/cards/user';
 import { Pagination } from '@/components/common';
-import Searchbar from '@/components/common/SearchBar';
+import Searchbar from '@/components/common/search-bar';
 
 type Props = {
   searchParams: {

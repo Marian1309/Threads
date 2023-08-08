@@ -40,7 +40,7 @@ const BottomBar: FC = () => {
               className={cn(
                 'relative flex-col gap-2 rounded-lg p-3 py-2 transition-colors flex-center sm:px-4 sm:py-2.5',
                 isActive && 'bg-[#641ae6]',
-                !isActive && 'hover:bg-[#877EFF]'
+                !isActive && 'hover:bg-slate-500'
               )}
             >
               <Image

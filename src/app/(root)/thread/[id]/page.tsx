@@ -5,7 +5,7 @@ import prismaClient from '@/lib/prisma-client';
 import { fetchThreadById } from '@/actions/thread';
 import { fetchUser } from '@/actions/user';
 
-import ThreadCard from '@/components/cards/thread';
+import { ThreadCard } from '@/components/cards';
 import { Comment } from '@/components/forms';
 
 type Props = {
@@ -28,9 +28,10 @@ const ThreadIdPage = async ({ params }: Props) => {
 
   const userInfo = await fetchUser(user.id);
   const thread = await fetchThreadById(params.id);
+
   const community = await prismaClient.community.findFirst({
     where: {
-      id: thread?.communityId
+      id: thread?.communityId || ''
     }
   });
 
@@ -69,16 +70,8 @@ const ThreadIdPage = async ({ params }: Props) => {
 
       <div className="mt-10 flex flex-col gap-5 pl-16">
         {thread?.children.map((childrenItem) => {
-          const {
-            id,
-            parentId,
-            text,
-            authorId,
-            author,
-            createdAt,
-            children,
-            community
-          } = childrenItem;
+          const { id, parentId, text, authorId, author, createdAt, children } =
+            childrenItem;
 
           return (
             <ThreadCard

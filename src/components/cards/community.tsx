@@ -61,6 +61,7 @@ function CommunityCard({ id, name, username, imgUrl, bio, members }: Props) {
                 } rounded-full object-cover`}
               />
             ))}
+
             {members.length > 3 && (
               <p className="ml-1 font-medium text-[#697C89]">
                 {members.length}+ Users

@@ -32,6 +32,7 @@ type Props = {
 
 const PostThread: FC<Props> = ({ userId }) => {
   const router = useRouter();
+
   const form = useForm<ThreadSchema>({
     resolver: zodResolver(threadSchema),
     defaultValues: {
@@ -46,7 +47,7 @@ const PostThread: FC<Props> = ({ userId }) => {
       await createThread({
         text: values.thread,
         authorId: userId,
-        communityId: organization?.id
+        communityId: organization?.id || ''
       });
 
       form.reset();

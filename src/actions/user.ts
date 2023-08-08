@@ -59,13 +59,8 @@ const fetchUserPosts = async (userId: string) => {
       include: {
         threads: {
           include: {
-            community: {
-              select: {
-                name: true,
-                id: true,
-                image: true
-              }
-            },
+            community: true,
+
             children: {
               include: {
                 author: {

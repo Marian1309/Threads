@@ -3,6 +3,8 @@
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 
+import { ICONS } from '@/lib/constants';
+
 import { deleteThread } from '@/actions/thread';
 
 interface Props {
@@ -23,21 +25,26 @@ function DeleteThread({
   const pathname = usePathname();
   const router = useRouter();
 
-  if (currentUserId !== authorId || pathname === '/') return null;
+  if (currentUserId !== authorId || pathname === '/') {
+    return null;
+  }
+
+  const handlePostDeleting = async () => {
+    await deleteThread(JSON.parse(threadId), isComment ? pathname : '/');
+
+    if (!parentId || !isComment) {
+      router.push('/');
+    }
+  };
 
   return (
     <Image
-      src="/icons/delete.svg"
-      alt="delte"
+      src={ICONS.delete}
+      alt="delete"
       width={18}
       height={18}
       className="cursor-pointer object-contain"
-      onClick={async () => {
-        await deleteThread(JSON.parse(threadId), isComment ? pathname : '/');
-        if (!parentId || !isComment) {
-          router.push('/');
-        }
-      }}
+      onClick={handlePostDeleting}
     />
   );
 }

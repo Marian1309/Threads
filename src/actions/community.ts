@@ -134,16 +134,13 @@ export async function fetchCommunities({
   sortBy?: 'asc' | 'desc';
 }) {
   try {
-    // Calculate the number of communities to skip based on the page number and page size.
     const skipAmount = (pageNumber - 1) * pageSize;
 
-    // Create a case-insensitive search term for the provided search string.
     const searchTerm = `%${searchString}%`;
 
     const orderBy =
       sortBy === 'asc' ? { createdAt: 'asc' } : { createdAt: 'desc' };
 
-    // Create a Prisma query to filter and fetch communities.
     const communities = await prismaClient.community.findMany({
       where: {
         OR: [
@@ -155,11 +152,14 @@ export async function fetchCommunities({
       skip: skipAmount,
       take: pageSize,
       include: {
-        members: true
+        members: {
+          select: {
+            image: true
+          }
+        }
       }
     });
 
-    // Count the total number of communities that match the search criteria (without pagination).
     const totalCommunitiesCount = await prismaClient.community.count({
       where: {
         OR: [
@@ -169,7 +169,6 @@ export async function fetchCommunities({
       }
     });
 
-    // Check if there are more communities beyond the current page.
     const isNext = totalCommunitiesCount > skipAmount + communities.length;
 
     return { communities, isNext };
@@ -184,7 +183,6 @@ export async function addMemberToCommunity(
   memberId: string
 ) {
   try {
-    // Find the community by its unique id
     const community = await prismaClient.community.findUnique({
       where: {
         id: communityId
@@ -198,7 +196,6 @@ export async function addMemberToCommunity(
       throw new Error('Community not found');
     }
 
-    // Find the user by their unique id
     const user = await prismaClient.user.findUnique({
       where: {
         id: memberId
@@ -209,8 +206,7 @@ export async function addMemberToCommunity(
       throw new Error('User not found');
     }
 
-    // Check if the user is already a member of the community
-    if (community.members.includes(user.id)) {
+    if (community.members.includes(user?.id)) {
       throw new Error('User is already a member of the community');
     }
 

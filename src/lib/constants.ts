@@ -1,7 +1,12 @@
 export const ICONS = {
   logo: '/icons/logo.png',
   logout: '/icons/logout.svg',
-  profile: '/icons/profile.svg'
+  profile: '/icons/profile.svg',
+  delete: '/icons/delete.svg',
+  heartGray: '/icons/heart-gray.svg',
+  reply: '/icons/reply.svg',
+  repost: '/icons/repost.svg',
+  share: '/icons/share.svg'
 };
 
 export const SIDEBAR_LINKS = [

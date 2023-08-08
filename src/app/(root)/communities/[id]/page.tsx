@@ -6,14 +6,15 @@ import { communityTabs } from '@/lib/constants';
 
 import { fetchCommunityDetails } from '@/actions/community';
 
-import UserCard from '@/components/cards/user';
-import ProfileHeader from '@/components/common/ProfileHeader';
-import ThreadsTab from '@/components/common/ThreadsTab';
+import { UserCard } from '@/components/cards';
+import { ProfileHeader, ThreadsTab } from '@/components/common';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser();
-  if (!user) return null;
+  if (!user) {
+    return null;
+  }
 
   const communityDetails = await fetchCommunityDetails(params.id);
 
@@ -31,12 +32,16 @@ async function Page({ params }: { params: { id: string } }) {
 
       <div className="mt-9">
         <Tabs defaultValue="threads" className="w-full">
-          <TabsList className="flex min-h-[50px] flex-1 items-center bg-[#121417] p-0 text-[#EFEFEF] data-[state=active]:bg-[#0e0e12] data-[state=active]:text-[#EFEFEF]">
+          <TabsList
+            className="flex min-h-[50px] flex-1 items-center bg-[#121417]
+            p-0 text-[#EFEFEF] data-[state=active]:bg-[#0e0e12] data-[state=active]:text-[#EFEFEF]"
+          >
             {communityTabs.map((tab) => (
               <TabsTrigger
                 key={tab.label}
                 value={tab.value}
-                className="flex min-h-[50px] flex-1 items-center gap-x-3 bg-[#121417] text-[#EFEFEF] data-[state=active]:bg-[#0e0e12] data-[state=active]:text-[#EFEFEF]"
+                className="flex min-h-[50px] flex-1 items-center gap-x-3 bg-[#121417] text-[#EFEFEF]
+                data-[state=active]:bg-[#0e0e12] data-[state=active]:text-[#EFEFEF]"
               >
                 <Image
                   src={tab.icon}
@@ -45,6 +50,7 @@ async function Page({ params }: { params: { id: string } }) {
                   height={24}
                   className="object-contain"
                 />
+
                 <p className="max-sm:hidden">{tab.label}</p>
 
                 {tab.label === 'Threads' && (
@@ -80,7 +86,7 @@ async function Page({ params }: { params: { id: string } }) {
             </section>
           </TabsContent>
 
-          <TabsContent value="requests" className="text-light-1 w-full">
+          <TabsContent value="requests" className="w-full text-white">
             {/* @ts-ignore */}
             <ThreadsTab
               currentUserId={user.id}

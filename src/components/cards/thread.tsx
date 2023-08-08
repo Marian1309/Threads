@@ -5,6 +5,7 @@ import type { FC } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { ICONS } from '@/lib/constants';
 import { formatDateString } from '@/lib/utils';
 
 import DeleteThread from '../forms/delete-thread';
@@ -23,7 +24,7 @@ type Props = {
     community: {
       id: string;
       name: string;
-      image: string;
+      image: string | null;
     } | null;
     createdAt: Date | string;
     comments: {
@@ -37,6 +38,13 @@ type Props = {
 
 const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
   const { id, author, community, createdAt, comments, parentId } = post;
+
+  const links: { imgUrl: string; alt: string }[] = [
+    { imgUrl: ICONS.heartGray, alt: 'heart' },
+    { imgUrl: ICONS.reply, alt: 'reply' },
+    { imgUrl: ICONS.repost, alt: 'repost' },
+    { imgUrl: ICONS.share, alt: 'share' }
+  ];
 
   return (
     <article className="flex w-full flex-col rounded-xl bg-[#121417] p-7">
@@ -66,39 +74,31 @@ const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
 
             <div className="mt-5 flex flex-col gap-3">
               <div className="flex gap-3.5">
-                <Image
-                  src="/icons/heart-gray.svg"
-                  alt="heart"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer"
-                />
+                {links.map((link) => {
+                  if (link.alt === 'reply') {
+                    return (
+                      <Link href={`/thread/${id}`}>
+                        <Image
+                          src="/icons/reply.svg"
+                          alt="heart"
+                          width={24}
+                          height={24}
+                          className="cursor-pointer object-contain"
+                        />
+                      </Link>
+                    );
+                  }
 
-                <Link href={`/thread/${id}`}>
-                  <Image
-                    src="/icons/reply.svg"
-                    alt="heart"
-                    width={24}
-                    height={24}
-                    className="cursor-pointer object-contain"
-                  />
-                </Link>
-
-                <Image
-                  src="/icons/repost.svg"
-                  alt="heart"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer object-contain"
-                />
-
-                <Image
-                  src="/icons/share.svg"
-                  alt="heart"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer object-contain"
-                />
+                  return (
+                    <Image
+                      src={link.imgUrl}
+                      alt={link.alt}
+                      width={24}
+                      height={24}
+                      className="cursor-pointer object-contain"
+                    />
+                  );
+                })}
               </div>
 
               {isComment && comments && comments.length > 0 && (
@@ -154,7 +154,7 @@ const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
           </p>
 
           <Image
-            src={community.image}
+            src={community.image || ''}
             alt={community.name}
             width={20}
             height={20}

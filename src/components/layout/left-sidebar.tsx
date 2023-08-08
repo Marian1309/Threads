@@ -12,8 +12,8 @@ import { ICONS, SIDEBAR_LINKS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
 const LeftSidebar: FC = () => {
-  const pathname = usePathname();
   const router = useRouter();
+  const pathname = usePathname();
 
   const { userId } = useAuth();
 

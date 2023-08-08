@@ -2,9 +2,8 @@ import { currentUser } from '@clerk/nextjs';
 
 import { fetchCommunities } from '@/actions/community';
 
-import CommunityCard from '@/components/cards/community';
-import { Pagination } from '@/components/common';
-import Searchbar from '@/components/common/SearchBar';
+import { CommunityCard } from '@/components/cards';
+import { Pagination, SearchBar } from '@/components/common';
 
 type Props = {
   searchParams: {
@@ -29,7 +28,7 @@ const CommunitiesPage = async ({ searchParams }: Props) => {
       <h1 className="text-4xl font-bold text-white">Communities</h1>
 
       <div className="mt-5">
-        <Searchbar routeType="communities" placeholder="Search communities" />
+        <SearchBar routeType="communities" placeholder="Search communities" />
       </div>
 
       <div className="mt-9 flex flex-wrap gap-4">
@@ -45,7 +44,8 @@ const CommunitiesPage = async ({ searchParams }: Props) => {
                 username={community.username}
                 imgUrl={community.image || ''}
                 bio={community.bio || ''}
-                members={[]}
+                // @ts-ignore
+                members={community.members || []}
               />
             ))}
           </>

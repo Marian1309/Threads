@@ -42,7 +42,7 @@ const HomePage = async ({ searchParams }: Props) => {
 
   const { posts, isNext } = await fetchPosts(
     searchParams.page ? +searchParams.page : 1,
-    30
+    20
   );
 
   return (

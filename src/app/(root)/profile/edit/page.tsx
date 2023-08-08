@@ -2,7 +2,7 @@ import { currentUser } from '@clerk/nextjs';
 
 import { fetchUser } from '@/actions/user';
 
-import { AccountProfile } from '@/components/forms';
+import { UpdateProfile } from '@/components/forms';
 
 const ProfileEditPage = async () => {
   const user = await currentUser();
@@ -26,12 +26,13 @@ const ProfileEditPage = async () => {
       <h1 className="mt-24 text-[30px] font-bold leading-[140%] text-white">
         Profile
       </h1>
+
       <p className="mt-3 text-[16px] font-normal leading-[140%] text-[#EFEFEF]">
         Make some changes
       </p>
 
       <section className="mt-9">
-        <AccountProfile user={userData} btnTitle="Continue" />
+        <UpdateProfile user={userData} btnTitle="Continue" />
       </section>
     </main>
   );

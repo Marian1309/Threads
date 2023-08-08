@@ -13,8 +13,9 @@ type Props = {
 };
 
 function Searchbar({ routeType, placeholder }: Props) {
+  const [search, setSearch] = useState<string>('');
+
   const router = useRouter();
-  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -23,7 +24,7 @@ function Searchbar({ routeType, placeholder }: Props) {
       } else {
         router.push(`/${routeType}`);
       }
-    }, 300);
+    }, 200);
 
     return () => clearTimeout(delayDebounceFn);
   }, [search, routeType, router]);

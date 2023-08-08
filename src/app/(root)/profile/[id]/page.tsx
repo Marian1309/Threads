@@ -6,8 +6,7 @@ import { profileTabs } from '@/lib/constants';
 
 import { fetchUser } from '@/actions/user';
 
-import ProfileHeader from '@/components/common/ProfileHeader';
-import ThreadsTab from '@/components/common/ThreadsTab';
+import { ProfileHeader, ThreadsTab } from '@/components/common';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 type Props = {

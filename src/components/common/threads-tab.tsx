@@ -1,9 +1,11 @@
 import { redirect } from 'next/navigation';
 
+import type { Community } from '@prisma/client';
+
 import { fetchCommunityPosts } from '@/actions/community';
 import { fetchUserPosts } from '@/actions/user';
 
-import ThreadCard from '@/components/cards/thread';
+import { ThreadCard } from '../cards';
 
 type Props = {
   currentUserId: string;
@@ -16,6 +18,7 @@ type Result = {
   image: string;
   id: string;
   threads: {
+    community: Community;
     id: string;
     text: string;
     parentId: string | null;
@@ -37,12 +40,12 @@ const ThreadsTab = async ({ currentUserId, accountId, accountType }: Props) => {
   let result: Result;
 
   if (accountType === 'Community') {
+    // @ts-ignore
     result = await fetchCommunityPosts(accountId);
   } else {
+    // @ts-ignore
     result = await fetchUserPosts(accountId);
   }
-
-  console.log(result);
 
   if (!result) {
     redirect('/');
@@ -73,11 +76,7 @@ const ThreadsTab = async ({ currentUserId, accountId, accountType }: Props) => {
 
             createdAt: thread.createdAt,
             comments: thread.children,
-            community: {
-              id: thread.id || '',
-              name: community?.name || '',
-              image: community?.image || ''
-            }
+            community: thread.community || null
           }}
         />
       ))}
