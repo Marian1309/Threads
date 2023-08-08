@@ -4,6 +4,7 @@ import type { FC } from 'react';
 
 import { useRouter } from 'next/navigation';
 
+import { useOrganization } from '@clerk/nextjs';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
@@ -38,13 +39,14 @@ const PostThread: FC<Props> = ({ userId }) => {
       accountId: userId
     }
   });
+  const { organization } = useOrganization();
 
   const onSubmit = async (values: ThreadSchema) => {
     try {
       await createThread({
         text: values.thread,
         authorId: userId,
-        communityId: null
+        communityId: organization?.id
       });
 
       form.reset();

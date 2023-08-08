@@ -25,7 +25,7 @@ const ProfileHeader: FC<Props> = ({
   type
 }) => {
   return (
-    <div className="mt-24 flex w-full flex-col justify-start p-6">
+    <div className="mt-24 flex w-full flex-col justify-start p-6 pb-2">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="relative h-20 w-20 object-cover">
@@ -59,9 +59,9 @@ const ProfileHeader: FC<Props> = ({
         )}
       </div>
 
-      <p className="mt-6 max-w-lg font-normal text-[#EFEFEF]">{bio}</p>
+      <p className="mt-4 max-w-lg font-normal text-[#EFEFEF]">{bio}</p>
 
-      <div className="mt-12 h-0.5 w-full bg-[#101012]" />
+      <div className="mt-4 h-0.5 w-full bg-[#101012]" />
     </div>
   );
 };

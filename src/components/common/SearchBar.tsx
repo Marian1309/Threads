@@ -9,13 +9,13 @@ import { Input } from '../ui/input';
 
 type Props = {
   routeType: string;
+  placeholder: string;
 };
 
-function Searchbar({ routeType }: Props) {
+function Searchbar({ routeType, placeholder }: Props) {
   const router = useRouter();
   const [search, setSearch] = useState('');
 
-  // query after 0.3s of no input
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if (search) {
@@ -42,10 +42,8 @@ function Searchbar({ routeType }: Props) {
         id="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder={`${
-          routeType !== '/search' ? 'Search communities' : 'Search creators'
-        }`}
-        className="border-none bg-[#101012] font-normal text-[#5C5C7B] outline-none
+        placeholder={placeholder}
+        className="border-none bg-[#101012] font-normal text-[#5C5C7B] outline-none focus:text-white
         focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
       />
     </div>

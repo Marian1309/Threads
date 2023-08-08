@@ -44,8 +44,7 @@ const updateUser: UpdateUserFn = async (userId, data, path) => {
       }
     });
 
-    // TODO rewrite when /profile/edit will be
-    if (path === `/profile/${userId}`) {
+    if (path === '/profile/edit') {
       revalidatePath(path);
     }
   } catch (err: unknown) {
@@ -60,6 +59,13 @@ const fetchUserPosts = async (userId: string) => {
       include: {
         threads: {
           include: {
+            community: {
+              select: {
+                name: true,
+                id: true,
+                image: true
+              }
+            },
             children: {
               include: {
                 author: {

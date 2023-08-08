@@ -16,7 +16,14 @@ import { commentSchema } from '@/lib/validators';
 import { addCommentToThread } from '@/actions/thread';
 
 import { Button } from '../ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '../ui/form';
 import { Input } from '../ui/input';
 
 type Props = {
@@ -85,6 +92,8 @@ const Comment: FC<Props> = ({ threadId, currentUserId, currentUserImg }) => {
                   className="text-lg text-white outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
                 />
               </FormControl>
+
+              <FormMessage />
             </FormItem>
           )}
         />

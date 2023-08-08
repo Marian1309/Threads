@@ -31,7 +31,7 @@ const SearchPage = async ({ searchParams }: Props) => {
     <section>
       <h1 className="mt-24 text-4xl font-bold">Search</h1>
 
-      <Searchbar routeType="search" />
+      <Searchbar routeType="search" placeholder="Search creators" />
 
       <div className="mt-8 flex flex-col gap-9">
         {users.length === 0 ? (

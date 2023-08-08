@@ -47,9 +47,9 @@ const HomePage = async ({ searchParams }: Props) => {
 
   return (
     <>
-      <h1 className="mt-24 text-4xl font-bold">Home</h1>
+      <h1 className="mt-[78px] text-4xl font-bold">Home</h1>
 
-      <section className="mt-9 flex flex-col gap-10">
+      <section className="mt-5 flex flex-col gap-x-4 gap-y-5">
         {posts.length === 0 ? (
           <p className="text-left text-xl text-[#7878A3]">No threads found.</p>
         ) : (
@@ -61,7 +61,8 @@ const HomePage = async ({ searchParams }: Props) => {
               authorId,
               author,
               createdAt,
-              children
+              children,
+              community
             } = post;
 
             return (
@@ -81,7 +82,7 @@ const HomePage = async ({ searchParams }: Props) => {
                   comments: children.map((comment) => ({
                     author: { image: comment.author.image || '' }
                   })),
-                  community: null
+                  community: community || null
                 }}
               />
             );

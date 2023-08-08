@@ -6,10 +6,9 @@ import { profileTabs } from '@/lib/constants';
 
 import { fetchUser } from '@/actions/user';
 
+import ProfileHeader from '@/components/common/ProfileHeader';
+import ThreadsTab from '@/components/common/ThreadsTab';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-import ProfileHeader from './_components/ProfileHeader';
-import ThreadsTab from './_components/ThreadsTab';
 
 type Props = {
   params: {
@@ -26,7 +25,7 @@ const ProfileIdPage = async ({ params }: Props) => {
   const userInfo = await fetchUser(params.id);
 
   return (
-    <section className="min-h-[100svh]">
+    <section>
       <ProfileHeader
         accountId={userInfo?.id || ''}
         authUserId={user.id}
@@ -36,7 +35,7 @@ const ProfileIdPage = async ({ params }: Props) => {
         bio={userInfo?.bio || ''}
       />
 
-      <div className="mt-9">
+      <div className="mt-4">
         <Tabs defaultValue="threads" className="w-full">
           <TabsList className="flex min-h-[50px] flex-1 items-center bg-[#121417] p-0 text-[#EFEFEF] data-[state=active]:bg-[#0e0e12] data-[state=active]:text-[#EFEFEF]">
             {profileTabs.map((tab) => (
@@ -55,7 +54,7 @@ const ProfileIdPage = async ({ params }: Props) => {
                 <p className="max-sm:hidden">{tab.label}</p>
 
                 {tab.label === 'Threads' && (
-                  <p className="text-light-2 ml-1 rounded-sm bg-[#5C5C7B] px-2 py-1 font-medium">
+                  <p className="ml-1 rounded-sm bg-[#5C5C7B] px-2 py-1 font-medium text-[#EFEFEF]">
                     {userInfo?.threads.length}
                   </p>
                 )}

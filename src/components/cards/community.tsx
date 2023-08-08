@@ -16,7 +16,7 @@ interface Props {
 
 function CommunityCard({ id, name, username, imgUrl, bio, members }: Props) {
   return (
-    <article className="community-card">
+    <article className="w-full rounded-lg bg-[#101012] px-4 py-5 sm:w-96">
       <div className="flex flex-wrap items-center gap-3">
         <Link href={`/communities/${id}`} className="relative h-12 w-12">
           <Image
@@ -29,17 +29,20 @@ function CommunityCard({ id, name, username, imgUrl, bio, members }: Props) {
 
         <div>
           <Link href={`/communities/${id}`}>
-            <h4 className="text-base-semibold text-light-1">{name}</h4>
+            <h4 className="font-semibold text-white">{name}</h4>
           </Link>
-          <p className="text-small-medium text-gray-1">@{username}</p>
+          <p className="font-medium text-[#697C89]">@{username}</p>
         </div>
       </div>
 
-      <p className="text-subtle-medium text-gray-1 mt-4">{bio}</p>
+      <p className="text-subtle-medium mt-4 text-[#697C89]">{bio}</p>
 
       <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
         <Link href={`/communities/${id}`}>
-          <Button size="sm" className="community-card_btn">
+          <Button
+            size="sm"
+            className="font-white rounded-lg bg-favorite px-5 py-1.5 font-normal hover:bg-slate-500"
+          >
             View
           </Button>
         </Link>
@@ -59,7 +62,7 @@ function CommunityCard({ id, name, username, imgUrl, bio, members }: Props) {
               />
             ))}
             {members.length > 3 && (
-              <p className="text-subtle-medium text-gray-1 ml-1">
+              <p className="ml-1 font-medium text-[#697C89]">
                 {members.length}+ Users
               </p>
             )}

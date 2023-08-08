@@ -1,5 +1,7 @@
 import { currentUser } from '@clerk/nextjs';
 
+import prismaClient from '@/lib/prisma-client';
+
 import { fetchThreadById } from '@/actions/thread';
 import { fetchUser } from '@/actions/user';
 
@@ -26,6 +28,11 @@ const ThreadIdPage = async ({ params }: Props) => {
 
   const userInfo = await fetchUser(user.id);
   const thread = await fetchThreadById(params.id);
+  const community = await prismaClient.community.findFirst({
+    where: {
+      id: thread?.communityId
+    }
+  });
 
   return (
     <section className="relative mt-28">
@@ -43,10 +50,11 @@ const ThreadIdPage = async ({ params }: Props) => {
               image: thread?.author?.image || ''
             },
             createdAt: thread?.createdAt || '',
-            comments: thread?.children.map((comment) => ({
-              author: { image: comment.author.image || '' }
-            })),
-            community: null
+            comments:
+              thread?.children.map((comment) => ({
+                author: { image: comment.author.image || '' }
+              })) || [],
+            community: community || null
           }}
         />
       </div>
@@ -59,10 +67,18 @@ const ThreadIdPage = async ({ params }: Props) => {
         />
       </div>
 
-      <div className="mt-10 flex flex-col gap-5">
+      <div className="mt-10 flex flex-col gap-5 pl-16">
         {thread?.children.map((childrenItem) => {
-          const { id, parentId, text, authorId, author, createdAt, children } =
-            childrenItem;
+          const {
+            id,
+            parentId,
+            text,
+            authorId,
+            author,
+            createdAt,
+            children,
+            community
+          } = childrenItem;
 
           return (
             <ThreadCard
@@ -81,9 +97,8 @@ const ThreadIdPage = async ({ params }: Props) => {
                 comments: children.map((comment) => ({
                   author: { image: comment.author.image || '' }
                 })),
-                community: null
+                community: community || null
               }}
-              isComment
             />
           );
         })}

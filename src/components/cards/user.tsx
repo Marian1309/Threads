@@ -33,8 +33,8 @@ const UserCard: FC<Props> = ({ id, name, username, imgUrl, personType }) => {
         </div>
 
         <div className="flex-1 text-ellipsis">
-          <h4 className="font-semibold text-white">{name}</h4>
-          <p className="font-bold text-[#697C89]">@{username}</p>
+          <h4 className="font-normal text-white">{name}</h4>
+          <p className="font-semibold text-[#697C89]">@{username}</p>
         </div>
       </div>
 

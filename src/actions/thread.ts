@@ -11,7 +11,9 @@ const fetchPosts = async (pageNumber = 1, pageSize = 20) => {
 
   const posts = await prismaClient.thread.findMany({
     where: {
-      parentId: null
+      parentId: {
+        equals: null
+      }
     },
     orderBy: {
       createdAt: 'desc'
@@ -25,6 +27,7 @@ const fetchPosts = async (pageNumber = 1, pageSize = 20) => {
           image: true
         }
       },
+      community: true,
       children: {
         include: {
           author: {
@@ -56,7 +59,7 @@ const createThread: CreateThreadFn = async ({
       data: {
         text,
         authorId,
-        communityId: communityId ?? ''
+        communityId: communityId || ''
       }
     });
 
@@ -82,7 +85,7 @@ const createThread: CreateThreadFn = async ({
 
 const fetchThreadById = async (threadId: string) => {
   try {
-    const thread = await prismaClient.thread.findUnique({
+    const thread = await prismaClient.thread.findFirst({
       where: {
         id: threadId
       },

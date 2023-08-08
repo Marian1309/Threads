@@ -18,7 +18,7 @@ export const isBase64Image = (imageData: string) => {
   return base64Regex.test(imageData);
 };
 
-export const formatDateString = (dateString: Date) => {
+export const formatDateString = (dateString: Date | string) => {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'short',

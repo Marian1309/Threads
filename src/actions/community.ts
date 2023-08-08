@@ -69,7 +69,8 @@ export async function fetchCommunityDetails(id: string) {
             image: true,
             id: true
           }
-        }
+        },
+        threads: true
       }
     });
 
@@ -90,6 +91,7 @@ export async function fetchCommunityPosts(id: string) {
       include: {
         threads: {
           include: {
+            community: true,
             author: {
               select: {
                 name: true,

@@ -1,7 +1,6 @@
 import { currentUser } from '@clerk/nextjs';
 
 import { fetchCommunities } from '@/actions/community';
-import { fetchUser } from '@/actions/user';
 
 import CommunityCard from '@/components/cards/community';
 import { Pagination } from '@/components/common';
@@ -15,32 +14,30 @@ type Props = {
 
 const CommunitiesPage = async ({ searchParams }: Props) => {
   const user = await currentUser();
-  if (!user) return null;
+  if (!user) {
+    return null;
+  }
 
-  const userInfo = await fetchUser(user.id);
-
-  const result = await fetchCommunities({
+  const { communities, isNext } = await fetchCommunities({
     searchString: searchParams.q,
     pageNumber: searchParams?.page ? +searchParams.page : 1,
     pageSize: 25
   });
 
-  console.log(result);
-
   return (
-    <>
-      <h1 className="head-text">Communities</h1>
+    <section className="mt-24">
+      <h1 className="text-4xl font-bold text-white">Communities</h1>
 
       <div className="mt-5">
-        <Searchbar routeType="communities" />
+        <Searchbar routeType="communities" placeholder="Search communities" />
       </div>
 
-      <section className="mt-9 flex flex-wrap gap-4">
-        {result.communities.length === 0 ? (
-          <p className="no-result">No Result</p>
+      <div className="mt-9 flex flex-wrap gap-4">
+        {communities.length === 0 ? (
+          <p className="text-center font-normal text-[#101012]">No Result</p>
         ) : (
           <>
-            {result.communities.map((community) => (
+            {communities.map((community) => (
               <CommunityCard
                 key={community.id}
                 id={community.id}
@@ -53,14 +50,14 @@ const CommunitiesPage = async ({ searchParams }: Props) => {
             ))}
           </>
         )}
-      </section>
+      </div>
 
       <Pagination
         path="communities"
         pageNumber={searchParams?.page ? +searchParams.page : 1}
-        isNext={result.isNext}
+        isNext={isNext}
       />
-    </>
+    </section>
   );
 };
 

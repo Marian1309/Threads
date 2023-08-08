@@ -25,7 +25,7 @@ type Props = {
       name: string;
       image: string;
     } | null;
-    createdAt: Date;
+    createdAt: Date | string;
     comments: {
       author: {
         image: string;
@@ -148,7 +148,7 @@ const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
           href={`/communities/${community.id}`}
           className="mt-5 flex items-center"
         >
-          <p className="text-subtle-medium text-gray-1">
+          <p className="font-medium text-[#697C89]">
             {formatDateString(createdAt)}
             {community && ` - ${community.name} Community`}
           </p>
@@ -156,9 +156,9 @@ const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
           <Image
             src={community.image}
             alt={community.name}
-            width={14}
-            height={14}
-            className="ml-1 rounded-full object-cover"
+            width={20}
+            height={20}
+            className="ml-2 rounded-full object-cover"
           />
         </Link>
       )}
