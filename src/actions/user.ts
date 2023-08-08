@@ -128,4 +128,48 @@ const fetchUsers: FetchUsersFn = async ({
   }
 };
 
-export { fetchUser, updateUser, fetchUserPosts, fetchUsers };
+const getActivity = async (userId: string) => {
+  try {
+    const userThreads = await prismaClient.thread.findMany({
+      where: {
+        authorId: userId
+      },
+      include: {
+        children: true
+      }
+    });
+
+    const childThreadIds = userThreads.flatMap((userThread) =>
+      userThread.children.map((thread) => thread.id)
+    );
+
+    const replies = await prismaClient.thread.findMany({
+      where: {
+        id: {
+          in: childThreadIds
+        },
+        authorId: {
+          not: {
+            equals: userId
+          }
+        }
+      },
+      include: {
+        author: {
+          select: {
+            name: true,
+            image: true,
+            id: true
+          }
+        }
+      }
+    });
+
+    return replies;
+  } catch (error) {
+    console.error('Error fetching replies: ', error);
+    throw error;
+  }
+};
+
+export { fetchUser, updateUser, fetchUserPosts, fetchUsers, getActivity };

@@ -21,7 +21,7 @@ const UserCard: FC<Props> = ({ id, name, username, imgUrl, personType }) => {
   const isCommunity = personType === 'Community';
 
   return (
-    <article className="max-xs:bg-dark-3 flex flex-col justify-between gap-4 max-xs:rounded-xl max-xs:p-4 xs:flex-row xs:items-center">
+    <article className="flex flex-col justify-between gap-4 max-xs:rounded-xl max-xs:bg-[#101012] max-xs:p-4 xs:flex-row xs:items-center">
       <div className="flex flex-1 items-start justify-start gap-3 xs:items-center">
         <div className="relative h-12 w-12">
           <Image
@@ -33,13 +33,13 @@ const UserCard: FC<Props> = ({ id, name, username, imgUrl, personType }) => {
         </div>
 
         <div className="flex-1 text-ellipsis">
-          <h4 className="text-base-semibold text-light-1">{name}</h4>
-          <p className="text-small-medium text-gray-1">@{username}</p>
+          <h4 className="font-semibold text-white">{name}</h4>
+          <p className="font-bold text-[#697C89]">@{username}</p>
         </div>
       </div>
 
       <Button
-        className="user-card_btn"
+        className="bg-favorite leading-[1px] hover:bg-slate-500"
         onClick={() => {
           if (isCommunity) {
             router.push(`/communities/${id}`);
