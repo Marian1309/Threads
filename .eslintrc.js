@@ -68,7 +68,9 @@ module.exports = {
     'react/prop-types': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     camelcase: 'off',
-    'no-unsafe-optional-chaining': 'off'
+    'no-unsafe-optional-chaining': 'off',
+    'no-restricted-syntax': 'off',
+    'no-await-in-loop': 'off'
   },
   globals: {
     process: true,

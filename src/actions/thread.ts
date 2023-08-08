@@ -2,8 +2,9 @@
 
 import { revalidatePath } from 'next/cache';
 
+import type { CreateThreadFn } from '@/types/functions';
+
 import prismaClient from '@/lib/prisma-client';
-import type { CreateThreadFn } from '@/lib/types/functions';
 
 const fetchPosts = async (pageNumber = 1, pageSize = 20) => {
   const skipAmount = (pageNumber - 1) * pageSize;
@@ -87,6 +88,7 @@ const fetchThreadById = async (threadId: string) => {
       },
       include: {
         author: { select: { id: true, name: true, image: true } },
+
         children: {
           include: {
             author: {
@@ -157,5 +159,60 @@ const addCommentToThread = async (
     throw new Error('Unable to add comment');
   }
 };
+
+async function fetchAllChildThreads(threadId: string): Promise<any[]> {
+  const childThreads = await prismaClient.thread.findMany({
+    where: {
+      parentId: threadId
+    },
+    include: {
+      children: true
+    }
+  });
+
+  const descendants: any[] = [];
+
+  for (const childThread of childThreads) {
+    descendants.push(childThread);
+    const nestedDescendants = await fetchAllChildThreads(childThread.id);
+    descendants.push(...nestedDescendants);
+  }
+
+  return descendants;
+}
+
+export async function deleteThread(id: string, path: string): Promise<void> {
+  try {
+    const descendantThreads = await fetchAllChildThreads(id);
+
+    const descendantThreadIds = [
+      ...descendantThreads.map((thread) => thread.id)
+    ];
+
+    await prismaClient.thread.updateMany({
+      where: {
+        id: {
+          in: descendantThreadIds
+        }
+      },
+      data: {
+        parentId: null
+      }
+    });
+
+    await prismaClient.thread.deleteMany({
+      where: {
+        id: {
+          in: [...descendantThreadIds, id]
+        }
+      }
+    });
+
+    revalidatePath(path);
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(`Failed to delete thread: ${error.message}`);
+  }
+}
 
 export { createThread, fetchPosts, fetchThreadById, addCommentToThread };

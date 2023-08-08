@@ -29,7 +29,7 @@ function Searchbar({ routeType }: Props) {
   }, [search, routeType, router]);
 
   return (
-    <div className="mt-28 flex gap-1 rounded-lg bg-[#101012] px-4 py-2">
+    <div className="mt-6 flex gap-1 rounded-lg bg-[#101012] px-4 py-2">
       <Image
         src="/icons/search-gray.svg"
         alt="search"

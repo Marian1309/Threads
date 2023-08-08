@@ -20,7 +20,7 @@ const TopBar: FC = () => {
     <nav className="fixed top-0 z-30 min-h-[63px] w-full bg-[#121417] px-6 py-3 flex-between">
       <Link href="/" className="flex items-center gap-4">
         <Image src={ICONS.logo} alt="logo" width={28} height={28} />
-        <p className="text-[24px] font-bold leading-[140%] text-white max-xs:hidden">
+        <p className="text-[24px] font-bold leading-[140%] text-white">
           Threads
         </p>
       </Link>

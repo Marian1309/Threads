@@ -33,7 +33,7 @@ const SearchPage = async ({ searchParams }: Props) => {
 
       <Searchbar routeType="search" />
 
-      <div className="mt-14 flex flex-col gap-9">
+      <div className="mt-8 flex flex-col gap-9">
         {users.length === 0 ? (
           <p className="text-center font-normal text-[#101012]">No users</p>
         ) : (

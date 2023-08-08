@@ -26,7 +26,7 @@ const ProfileIdPage = async ({ params }: Props) => {
   const userInfo = await fetchUser(params.id);
 
   return (
-    <section>
+    <section className="min-h-[100svh]">
       <ProfileHeader
         accountId={userInfo?.id || ''}
         authUserId={user.id}

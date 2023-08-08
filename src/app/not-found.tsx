@@ -12,6 +12,7 @@ const NotFound = () => {
   return (
     <>
       <TopBar />
+
       <main className="flex">
         <LeftSidebar />
 
@@ -21,6 +22,7 @@ const NotFound = () => {
 
         <RightSidebar />
       </main>
+
       <BottomBar />
     </>
   );

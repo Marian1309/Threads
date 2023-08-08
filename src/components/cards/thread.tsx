@@ -7,6 +7,8 @@ import Link from 'next/link';
 
 import { formatDateString } from '@/lib/utils';
 
+import DeleteThread from '../forms/delete-thread';
+
 type Props = {
   currentUserId: string;
   post: {
@@ -34,7 +36,7 @@ type Props = {
 };
 
 const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
-  const { id, author, community, createdAt, comments } = post;
+  const { id, author, community, createdAt, comments, parentId } = post;
 
   return (
     <article className="flex w-full flex-col rounded-xl bg-[#121417] p-7">
@@ -109,6 +111,14 @@ const ThreadCard: FC<Props> = ({ currentUserId, post, isComment }) => {
             </div>
           </div>
         </div>
+
+        <DeleteThread
+          threadId={JSON.stringify(id)}
+          currentUserId={currentUserId}
+          authorId={author.id}
+          parentId={parentId}
+          isComment={isComment}
+        />
       </div>
 
       {!isComment && comments && comments?.length > 0 && (
