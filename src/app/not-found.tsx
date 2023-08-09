@@ -7,7 +7,6 @@ import {
   TopBar
 } from '@/components/layout';
 
-// TODO NotFound page overall
 const NotFound = () => {
   return (
     <>
