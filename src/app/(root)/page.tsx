@@ -6,7 +6,7 @@ import prismaClient from '@/lib/prisma-client';
 
 import { fetchPosts } from '@/actions/thread';
 
-import ThreadCard from '@/components/cards/thread';
+import { ThreadCard } from '@/components/cards';
 import { Pagination } from '@/components/common';
 
 type Props = {

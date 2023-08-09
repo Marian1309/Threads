@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Image from 'next/image';
 
 import { currentUser } from '@clerk/nextjs';
@@ -10,7 +11,23 @@ import { UserCard } from '@/components/cards';
 import { ProfileHeader, ThreadsTab } from '@/components/common';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-async function Page({ params }: { params: { id: string } }) {
+type Props = {
+  params: {
+    id: string;
+  };
+};
+
+export const generateMetadata = async ({
+  params
+}: Props): Promise<Metadata> => {
+  const communityDetails = await fetchCommunityDetails(params.id);
+
+  return {
+    title: `${communityDetails?.name} Community • Threads`
+  };
+};
+
+const CommunityIdPage = async ({ params }: Props) => {
   const user = await currentUser();
   if (!user) {
     return null;
@@ -98,6 +115,6 @@ async function Page({ params }: { params: { id: string } }) {
       </div>
     </section>
   );
-}
+};
 
-export default Page;
+export default CommunityIdPage;

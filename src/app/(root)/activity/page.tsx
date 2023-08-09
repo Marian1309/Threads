@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -6,6 +7,10 @@ import { ArrowBigRightDash } from 'lucide-react';
 
 import { fetchUser, getActivity } from '@/actions/user';
 
+export const metadata: Metadata = {
+  title: 'Activity • Threads'
+};
+
 const ActivityPage = async () => {
   const user = await currentUser();
   if (!user) {
@@ -13,7 +18,6 @@ const ActivityPage = async () => {
   }
 
   const userInfo = await fetchUser(user.id);
-
   const activities = await getActivity(userInfo?.id || '');
 
   return (

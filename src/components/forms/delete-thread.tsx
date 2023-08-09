@@ -30,7 +30,7 @@ function DeleteThread({
   }
 
   const handlePostDeleting = async () => {
-    await deleteThread(JSON.parse(threadId), isComment ? pathname : '/');
+    await deleteThread(JSON.parse(threadId), pathname);
 
     if (!parentId || !isComment) {
       router.push('/');

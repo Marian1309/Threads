@@ -1,8 +1,14 @@
+import type { Metadata } from 'next';
+
 import { currentUser } from '@clerk/nextjs';
 
 import { fetchUser } from '@/actions/user';
 
 import { PostThread } from '@/components/forms';
+
+export const metadata: Metadata = {
+  title: 'Create thread • Threads'
+};
 
 const CreateThreadPage = async () => {
   const user = await currentUser();

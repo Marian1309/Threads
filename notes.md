@@ -1,0 +1,5 @@
+- CEO
+- Clear code in actiosn folder
+- Right Sidebar
+- Responsive design maybe
+- more fixes in the middle of

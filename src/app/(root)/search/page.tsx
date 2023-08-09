@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import { currentUser } from '@clerk/nextjs';
@@ -12,6 +13,10 @@ type Props = {
   searchParams: {
     [key: string]: string | undefined;
   };
+};
+
+export const metadata: Metadata = {
+  title: 'Search • Threads'
 };
 
 const SearchPage = async ({ searchParams }: Props) => {

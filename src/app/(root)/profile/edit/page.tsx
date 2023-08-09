@@ -1,8 +1,14 @@
+import type { Metadata } from 'next';
+
 import { currentUser } from '@clerk/nextjs';
 
 import { fetchUser } from '@/actions/user';
 
 import { UpdateProfile } from '@/components/forms';
+
+export const metadata: Metadata = {
+  title: 'Edit Profile • Threads'
+};
 
 const ProfileEditPage = async () => {
   const user = await currentUser();

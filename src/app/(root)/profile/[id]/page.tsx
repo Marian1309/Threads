@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Image from 'next/image';
 
 import { currentUser } from '@clerk/nextjs';
@@ -13,6 +14,10 @@ type Props = {
   params: {
     id: string;
   };
+};
+
+export const metadata: Metadata = {
+  title: 'Profile • Threads'
 };
 
 const ProfileIdPage = async ({ params }: Props) => {

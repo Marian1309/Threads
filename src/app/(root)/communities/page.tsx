@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import { currentUser } from '@clerk/nextjs';
 
 import { fetchCommunities } from '@/actions/community';
@@ -9,6 +11,10 @@ type Props = {
   searchParams: {
     [key: string]: string | undefined;
   };
+};
+
+export const metadata: Metadata = {
+  title: 'Communities • Threads'
 };
 
 const CommunitiesPage = async ({ searchParams }: Props) => {
