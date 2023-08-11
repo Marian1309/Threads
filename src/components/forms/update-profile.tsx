@@ -16,7 +16,7 @@ import type { HandleChangeProfileImage } from '@/types/functions';
 
 import { ICONS } from '@/lib/constants';
 import { useUploadThing } from '@/lib/uploadthing';
-import { isBase64Image } from '@/lib/utils';
+import { cn, isBase64Image } from '@/lib/utils';
 import type { UserSchema } from '@/lib/validators';
 import { userSchema } from '@/lib/validators';
 
@@ -48,6 +48,7 @@ type Props = {
 
 const UpdateProfile: FC<Props> = ({ user, btnTitle }) => {
   const [files, setFiles] = useState<File[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -84,6 +85,7 @@ const UpdateProfile: FC<Props> = ({ user, btnTitle }) => {
       ...values,
       image: values.profile_photo
     };
+    setIsLoading(true);
 
     try {
       await updateUser(user.id, updateUserPayload, pathname);
@@ -93,6 +95,8 @@ const UpdateProfile: FC<Props> = ({ user, btnTitle }) => {
       if (err instanceof AxiosError) {
         throw new Error(`Failed to update a user: ${err.message}`);
       }
+    } finally {
+      setIsLoading(false);
     }
 
     if (pathname === '/profile/edit') {
@@ -239,7 +243,11 @@ const UpdateProfile: FC<Props> = ({ user, btnTitle }) => {
           )}
         />
 
-        <Button type="submit" className="bg-favorite">
+        <Button
+          type="submit"
+          className={cn('bg-favorite', isLoading && 'text-white')}
+          disabled={isLoading}
+        >
           {btnTitle}
         </Button>
       </form>

@@ -28,7 +28,10 @@ const ActivityPage = async () => {
         {activities.length > 0 ? (
           <>
             {activities.map((activity) => (
-              <article className="flex items-center gap-2 rounded-md bg-[#121417] px-7 py-4">
+              <article
+                className="flex items-center gap-2 rounded-md bg-[#121417] px-7 py-4"
+                key={activity.id}
+              >
                 <Image
                   src={activity.author.image || ''}
                   alt="user_logo"
@@ -59,7 +62,7 @@ const ActivityPage = async () => {
             ))}
           </>
         ) : (
-          <p className="font-normal text-[#101012]">No activity yet</p>
+          <p className="font-normal text-white">No activity yet</p>
         )}
       </section>
     </>

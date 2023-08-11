@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import type { Community } from '@prisma/client';
@@ -48,6 +49,7 @@ const ThreadsTab = async ({ currentUserId, accountId, accountType }: Props) => {
   }
 
   if (!result) {
+    revalidatePath('/');
     redirect('/');
   }
 

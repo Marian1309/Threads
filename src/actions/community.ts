@@ -1,5 +1,7 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
+
 import prismaClient from '@/lib/prisma-client';
 
 const createCommunity = async (

@@ -1,6 +1,7 @@
 'use client';
 
 import type { FC } from 'react';
+import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -10,6 +11,7 @@ import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 
+import { cn } from '@/lib/utils';
 import type { ThreadSchema } from '@/lib/validators';
 import { threadSchema } from '@/lib/validators';
 
@@ -31,6 +33,7 @@ type Props = {
 };
 
 const PostThread: FC<Props> = ({ userId }) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const form = useForm<ThreadSchema>({
@@ -43,6 +46,8 @@ const PostThread: FC<Props> = ({ userId }) => {
   const { organization } = useOrganization();
 
   const onSubmit = async (values: ThreadSchema) => {
+    setIsLoading(true);
+
     try {
       await createThread({
         text: values.thread,
@@ -51,6 +56,8 @@ const PostThread: FC<Props> = ({ userId }) => {
       });
 
       form.reset();
+
+      setIsLoading(false);
 
       toast.success('Thread has been created.');
 
@@ -90,7 +97,14 @@ const PostThread: FC<Props> = ({ userId }) => {
           )}
         />
 
-        <Button type="submit" className="bg-favorite">
+        <Button
+          type="submit"
+          className={cn(
+            'bg-favorite',
+            isLoading && 'cursor-not-allowed text-white'
+          )}
+          disabled={isLoading}
+        >
           Post Thread
         </Button>
       </form>

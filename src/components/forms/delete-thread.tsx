@@ -43,7 +43,7 @@ function DeleteThread({
       alt="delete"
       width={18}
       height={18}
-      className="cursor-pointer object-contain"
+      className="cursor-pointer object-contain hover:animate-spin"
       onClick={handlePostDeleting}
     />
   );
