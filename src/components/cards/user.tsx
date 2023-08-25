@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import type { FC } from 'react';
 
 import Image from 'next/image';
@@ -59,4 +60,4 @@ const UserCard: FC<Props> = ({ id, name, username, imgUrl, personType }) => {
   );
 };
 
-export default UserCard;
+export default memo(UserCard);

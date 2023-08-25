@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import type { FC } from 'react';
 
 import Image from 'next/image';
@@ -47,4 +48,4 @@ const TopBar: FC = () => {
   );
 };
 
-export default TopBar;
+export default memo(TopBar);
